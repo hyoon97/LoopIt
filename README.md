@@ -2,6 +2,6 @@
 Mobile app for recording and looping the sounds
 
 ## Contributors
-Hyunse Yoon
+Hyunse Yoon <br />
 Vishal Venkatraman
 
