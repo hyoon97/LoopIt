@@ -5,4 +5,3 @@ Mobile app for recording and looping the sounds
 Hyunse Yoon\
 Vishal Venkatraman\
 Adarsh Rai
-
