@@ -1,4 +1,5 @@
-import android.Manifest;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
@@ -13,33 +14,32 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import java.io.IOException;
+import android.os.Environment;
 
-public class Loop extends AppCompatActivity {
+public class Loop  extends AppCompatActivity{
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String fileName = null;
 
-    private Record recordButton = null;
+    private RecordButton recordButton = null;
     private MediaRecorder recorder = null;
 
-    private Play playButton = null;
-    private MediaPlayer player = null;
+    private PlayButton  playButton = null;
+    private MediaPlayer   player = null;
 
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
-    private String[] permissions = { Manifest.permission.RECORD_AUDIO };
-}
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-        case REQUEST_RECORD_AUDIO_PERMISSION:
-            permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+        switch (requestCode){
+            case REQUEST_RECORD_AUDIO_PERMISSION:
+                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
             break;
         }
-        if (!permissionToRecordAccepted)
-            finish();
+        if (!permissionToRecordAccepted ) finish();
 
     }
 
@@ -61,9 +61,10 @@ public class Loop extends AppCompatActivity {
 
     private void startPlaying() {
         player = new MediaPlayer();
-        try {
+        try{
             player.setDataSource(fileName);
             player.prepare();
+            mPlayer.setLooping(true);
             player.start();
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
@@ -99,8 +100,17 @@ public class Loop extends AppCompatActivity {
 
     class RecordButton extends Button {
         boolean mStartRecording = true;
-
-        OnClickListener clicker=new OnClickListener(){public void onClick(View v){onRecord(mStartRecording);if(mStartRecording){setText("Stop recording");}else{setText("Start recording");}mStartRecording=!mStartRecording;}};
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onRecord(mStartRecording);
+                if (mStartRecording) {
+                    setText("Stop recording");
+                } else {
+                    setText("Start recording");
+                }
+                mStartRecording = !mStartRecording;
+            }
+        };
 
         public RecordButton(Context ctx) {
             super(ctx);
@@ -111,8 +121,17 @@ public class Loop extends AppCompatActivity {
 
     class PlayButton extends Button {
         boolean mStartPlaying = true;
-
-        OnClickListener clicker=new OnClickListener(){public void onClick(View v){onPlay(mStartPlaying);if(mStartPlaying){setText("Stop playing");}else{setText("Start playing");}mStartPlaying=!mStartPlaying;}};
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onPlay(mStartPlaying);
+                if (mStartPlaying) {
+                    setText("Stop playing");
+                } else {
+                    setText("Start playing");
+                }
+                mStartPlaying = !mStartPlaying;
+            }
+        };
 
         public PlayButton(Context ctx) {
             super(ctx);
@@ -133,25 +152,31 @@ public class Loop extends AppCompatActivity {
 
         LinearLayout ll = new LinearLayout(this);
         recordButton = new RecordButton(this);
-        ll.addView(recordButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT, 0));
+        ll.addView(recordButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
         playButton = new PlayButton(this);
-        ll.addView(playButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT, 0));
+        ll.addView(playButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
         setContentView(ll);
     }
 
-    @Override
     public void onStop() {
         super.onStop();
         if (recorder != null) {
             recorder.release();
             recorder = null;
         }
-
+    
         if (player != null) {
             player.release();
             player = null;
         }
     }
 }
+
