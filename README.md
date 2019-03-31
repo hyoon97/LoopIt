@@ -1,7 +1,10 @@
 # LoopIt
-Mobile app for recording and looping the sounds
+An Android application for recording and looping sounds
 
 ## Collaborators
--[] Brian Hyunse Yoon
+- Brian Hyunse Yoon
+- Adarsh Kulung Rai
+- Vishal Venkatraman
+
 
 
