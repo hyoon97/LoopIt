@@ -33,28 +33,47 @@
             android:layout_margin="12dp"
             >
 
-            <LinearLayout
-                android:orientation="vertical"
-
+            <RelativeLayout
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <ProgressBar
+                    android:id="@+id/progressBar1"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/circular_progress_bar"
+                    android:background="@drawable/circle_shape"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progress="0"
+                    android:visibility="invisible"
+                    android:layout_centerInParent="true"/>
 
                 <ImageView
-                    android:src="@drawable/round_mic_black_36dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:id="@+id/cardImage1"
 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:layout_centerInParent="true"/>
 
                 <TextView
-                    android:layout_marginTop="12dp"
-                    android:textColor="#6f6f6f"
+                    android:id="@+id/cardTimer1"
+                    android:textColor="#6fd620"
                     android:textSize="18sp"
                     android:text="0:00"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -71,34 +90,52 @@
             android:layout_margin="12dp"
             >
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:padding="16dp"
+            <RelativeLayout
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/circular_progress_bar"
+                    android:background="@drawable/circle_shape"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progress="0"
+                    android:visibility="invisible"
+                    android:layout_centerInParent="true"/>
+
                 <ImageView
-                    android:src="@drawable/round_mic_black_36dp"
+                    android:id="@+id/cardImage2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"/>
+
 
                 <TextView
+                    android:id="@+id/cardTimer2"
                     android:layout_marginTop="12dp"
-                    android:textColor="#6f6f6f"
+                    android:textColor="#6fd620"
                     android:textSize="18sp"
                     android:text="0:00"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"/>
 
-            </LinearLayout>
+
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardThree"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            android:id="@+id/cardThree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -108,27 +145,47 @@
             android:layout_margin="12dp"
             >
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:padding="16dp"
+            <RelativeLayout
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <ProgressBar
+                    android:id="@+id/progressBar3"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/circular_progress_bar"
+                    android:background="@drawable/circle_shape"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progress="0"
+                    android:visibility="invisible"
+                    android:layout_centerInParent="true"/>
 
                 <ImageView
-                    android:src="@drawable/round_mic_black_36dp"
+                    android:id="@+id/cardImage3"
+
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:layout_centerInParent="true"/>
 
                 <TextView
-                    android:layout_marginTop="12dp"
-                    android:textColor="#6f6f6f"
+                    android:id="@+id/cardTimer3"
+                    android:textColor="#6fd620"
                     android:textSize="18sp"
                     android:text="0:00"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -145,27 +202,47 @@
             android:layout_margin="12dp"
             >
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:padding="16dp"
+            <RelativeLayout
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <ProgressBar
+                    android:id="@+id/progressBar4"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/circular_progress_bar"
+                    android:background="@drawable/circle_shape"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progress="0"
+                    android:visibility="invisible"
+                    android:layout_centerInParent="true"/>
 
                 <ImageView
-                    android:src="@drawable/round_mic_black_36dp"
+                    android:id="@+id/cardImage4"
+
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:layout_centerInParent="true"/>
 
                 <TextView
-                    android:layout_marginTop="12dp"
-                    android:textColor="#6f6f6f"
+                    android:id="@+id/cardTimer4"
+                    android:textColor="#6fd620"
                     android:textSize="18sp"
                     android:text="0:00"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
