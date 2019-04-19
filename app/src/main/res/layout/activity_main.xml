@@ -409,7 +409,7 @@
                     android:id="@+id/operations"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_margin="10dp"
                     android:text="Operations"
                     android:textColor="#ffffff"
                     android:textSize="18sp"
@@ -423,7 +423,7 @@
 
                 <LinearLayout
                     android:id="@+id/operationsGridLeft"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_alignParentLeft="true"
@@ -439,11 +439,11 @@
                         app:cardCornerRadius="7dp"
                         android:layout_margin="7dp"
 
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:text="Clear"
@@ -462,12 +462,12 @@
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
                         app:cardCornerRadius="7dp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="7dp">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:text="Over-Dub"
@@ -476,19 +476,6 @@
                             android:textSize="18sp" />
 
                     </android.support.v7.widget.CardView>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/operationsGridRight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/operationsGridLeft"
-                    android:layout_below="@+id/operations"
-                    >
 
                     <android.support.v7.widget.CardView
                         android:layout_gravity="center"
@@ -499,11 +486,11 @@
                         app:cardCornerRadius="7dp"
                         android:layout_margin="7dp"
 
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:text="Tone"
@@ -522,12 +509,12 @@
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
                         app:cardCornerRadius="7dp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="7dp">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:text="Pitch"
@@ -562,6 +549,7 @@
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
+            android:id="@+id/fabMetronome"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="#c1d9ff"
             fab:fab_colorPressed="#2b7dff"
@@ -570,6 +558,7 @@
             android:foreground="?android:attr/selectableItemBackground"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="#c1d9ff"
