@@ -14,7 +14,6 @@ public class Recorder {
 
     Recorder(String file){
         fileName = file;
-//        time = duration;
     }
 
     public void start(){

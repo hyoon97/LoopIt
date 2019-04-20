@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,11 +21,13 @@
         </activity>
 
         <activity android:name=".PopUpSettings"
-            android:theme="@style/PopUpTheme">
+            android:theme="@style/PopUpTheme"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".PopUpMetronome"
-            android:theme="@style/PopUpTheme">
+            android:theme="@style/PopUpTheme"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
