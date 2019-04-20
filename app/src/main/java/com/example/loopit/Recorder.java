@@ -4,20 +4,17 @@ import android.media.MediaRecorder;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class Overdub {
+public class Recorder {
     private MediaRecorder recorder;
     private String fileName;
-    private Timer Handler;
-    private int time;
+//    private int time;
 
     private static final String LOG_TAG = "Recorder";
 
-    Overdub(String file, int duration){
+    Recorder(String file){
         fileName = file;
-        time = duration;
+//        time = duration;
     }
 
     public void start(){
@@ -32,17 +29,13 @@ public class Overdub {
             Log.e(LOG_TAG, "prepare() failed");
         }
         recorder.start();
-        Handler = new Timer();
-        Handler.schedule(stop, time);
     }
 
-    private TimerTask stop = new TimerTask(){
-        public void run(){
-            if (recorder != null) {
-                recorder.stop();
-                recorder.release();
-                recorder = null;
-            }
+    public void stop(){
+        if (recorder != null){
+            recorder.stop();
+            recorder.release();
+            recorder = null;
         }
-    };
+    }
 }
