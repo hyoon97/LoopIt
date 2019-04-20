@@ -20,10 +20,10 @@ public class Player {
     private ArrayList<String> track;
 
 
-    Player(ArrayList<String> trackList, boolean loop, PlaybackParams parameter){
+    Player(ArrayList<String> trackList, boolean loop){
         track = trackList;
         isLoop = loop;
-        params = parameter;
+//        params = parameter;
     }
 
     public void play(){
@@ -36,7 +36,7 @@ public class Player {
             Log.e(LOG_TAG, "prepare1() failed");
         }
         time = player.getDuration();
-        player.setPlaybackParams(params);
+//        player.setPlaybackParams(params);
         player.setLooping(isLoop);
         player.seekTo(currentPosition);
         player.start();
@@ -51,7 +51,7 @@ public class Player {
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare2() failed");
         }
-        player.setPlaybackParams(params);
+//        player.setPlaybackParams(params);
         player.setLooping(isLoop);
         player.seekTo(currentPosition);
         player.start();
