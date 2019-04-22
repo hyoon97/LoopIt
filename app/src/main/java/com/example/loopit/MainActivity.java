@@ -44,13 +44,12 @@ public class MainActivity extends AppCompatActivity {
     ImageView cardImage3;
     ImageView cardImage4;
 
-
-
     int micResId;
     int recordResId;
     int pauseResId;
     int playResId;
 
+    CardView clearButton;
     //Recorder and Player Variables
     private boolean isLoop = true;
 
@@ -188,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
         cardImage2.setVisibility(View.VISIBLE);
         cardImage3.setVisibility(View.VISIBLE);
         cardImage4.setVisibility(View.VISIBLE);
+
+        clearButton = (CardView) this.findViewById(R.id.clearTrack);
     }
 
     private void initFloatingButtons() {
@@ -211,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
     public void start_record1(){
         if (isFirst == true){
             trackName1 = getExternalCacheDir().getAbsolutePath();
-            trackName1 += "/track1"+ trackNum1 +".3gp";
+            trackName1 += "/track1"+ trackNum1 +".ogg";
             recorder1 = new Recorder(trackName1);
             track1.add(trackName1);
             trackNum1 += 1;
@@ -219,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             trackName1 = getExternalCacheDir().getAbsolutePath();
-            trackName1 += "/track1"+ trackNum1 +".3gp";
+            trackName1 += "/track1"+ trackNum1 +".ogg";
             recorder1 = new Recorder(trackName1);
             track1.add(trackName1);
             trackNum1 += 1;
@@ -246,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
         currentPosition1 = player1.getCurrentPosition();
         player1.play();
         trackName1 = getExternalCacheDir().getAbsolutePath();
-        trackName1 += "/track1"+ trackNum1 +".3gp";
+        trackName1 += "/track1"+ trackNum1 +".ogg";
         track1.add(trackName1);
         trackNum1 += 1;
         overdubHandler = new Timer();
@@ -289,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
     public void start_record2(){
         if (isFirst == true){
             trackName2 = getExternalCacheDir().getAbsolutePath();
-            trackName2 += "/track2"+ trackNum2 +".3gp";
+            trackName2 += "/track2"+ trackNum2 +".ogg";
             recorder2 = new Recorder(trackName2);
             track2.add(trackName2);
             trackNum2 += 1;
@@ -297,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             trackName2 = getExternalCacheDir().getAbsolutePath();
-            trackName2 += "/track2"+ trackNum2 +".3gp";
+            trackName2 += "/track2"+ trackNum2 +".ogg";
             recorder2 = new Recorder(trackName2);
             track2.add(trackName2);
             trackNum2 += 1;
@@ -324,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
         currentPosition2 = player2.getCurrentPosition();
         player2.play();
         trackName2 = getExternalCacheDir().getAbsolutePath();
-        trackName2 += "/track2"+ trackNum2 +".3gp";
+        trackName2 += "/track2"+ trackNum2 +".ogg";
         track2.add(trackName2);
         trackNum2 += 1;
         overdubHandler = new Timer();
@@ -367,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
     public void start_record3(){
         if (isFirst == true){
             trackName3 = getExternalCacheDir().getAbsolutePath();
-            trackName3 += "/track3"+ trackNum3 +".3gp";
+            trackName3 += "/track3"+ trackNum3 +".ogg";
             recorder3 = new Recorder(trackName3);
             track3.add(trackName3);
             trackNum3 += 1;
@@ -375,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             trackName3 = getExternalCacheDir().getAbsolutePath();
-            trackName3 += "/track3"+ trackNum3 +".3gp";
+            trackName3 += "/track3"+ trackNum3 +".ogg";
             recorder3 = new Recorder(trackName3);
             track3.add(trackName3);
             trackNum3 += 1;
@@ -402,7 +403,7 @@ public class MainActivity extends AppCompatActivity {
         currentPosition3 = player3.getCurrentPosition();
         player3.play();
         trackName3 = getExternalCacheDir().getAbsolutePath();
-        trackName3 += "/track3"+ trackNum3 +".3gp";
+        trackName3 += "/track3"+ trackNum3 +".ogg";
         track3.add(trackName3);
         trackNum3 += 1;
         overdubHandler = new Timer();
@@ -445,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
     public void start_record4(){
         if (isFirst == true){
             trackName4 = getExternalCacheDir().getAbsolutePath();
-            trackName4 += "/track4"+ trackNum4 +".3gp";
+            trackName4 += "/track4"+ trackNum4 +".ogg";
             recorder4 = new Recorder(trackName4);
             track4.add(trackName4);
             trackNum4 += 1;
@@ -453,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             trackName4 = getExternalCacheDir().getAbsolutePath();
-            trackName4 += "/track4"+ trackNum4 +".3gp";
+            trackName4 += "/track4"+ trackNum4 +".ogg";
             track4.add(trackName4);
             recorder4 = new Recorder(trackName4);
             trackNum4 += 1;
@@ -480,7 +481,7 @@ public class MainActivity extends AppCompatActivity {
         currentPosition4 = player4.getCurrentPosition();
         player4.play();
         trackName4 = getExternalCacheDir().getAbsolutePath();
-        trackName4 += "/track4"+ trackNum4 +".3gp";
+        trackName4 += "/track4"+ trackNum4 +".ogg";
         track4.add(trackName4);
         trackNum4 += 1;
         overdubHandler = new Timer();
@@ -597,6 +598,7 @@ public class MainActivity extends AppCompatActivity {
             }
             }
         });
+
         card2.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
             if(!isRecording2 && !isRecorded2 && !isPlaying2){
@@ -676,6 +678,32 @@ public class MainActivity extends AppCompatActivity {
                 isPlaying4 = true;
                 cardImage4.setImageResource(pauseResId);
             }
+            }
+        });
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trackNum1 = 0;
+                trackNum2 = 0;
+                trackNum3 = 0;
+                trackNum4 = 0;
+                isFirst = true;
+                isRecording1 = false;
+                isRecording2 = false;
+                isRecording3 = false;
+                isRecording4 = false;
+                isRecorded1 = false;
+                isRecorded2 = false;
+                isRecorded3 = false;
+                isRecorded4 = false;
+                isPlaying1 = false;
+                isPlaying2 = false;
+                isPlaying3 = false;
+                isPlaying4 = false;
+                cardImage1.setImageResource(micResId);
+                cardImage2.setImageResource(micResId);
+                cardImage3.setImageResource(micResId);
+                cardImage4.setImageResource(micResId);
             }
         });
     }
