@@ -226,21 +226,19 @@ public class MainActivity extends AppCompatActivity {
             trackNum1 += 1;
             recorder1.start();
             stopNonFirstRecord = new Timer();
-            stopNonFirstRecord.schedule(stopNonFirst, time);
+            stopNonFirstRecord.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    recorder1.stop();
+                    player1.play();
+                    isPlaying1 = true;
+                    isRecorded1 = true;
+                    isRecording1 = false;
+                    cardImage1.setImageResource(pauseResId);
+                }
+            }, time);
         }
     }
-
-    private TimerTask stopNonFirst = new TimerTask() {
-        @Override
-        public void run() {
-            recorder1.stop();
-            player1.play();
-            isPlaying1 = true;
-            isRecorded1 = true;
-            isRecording1 = false;
-            cardImage1.setImageResource(pauseResId);
-        }
-    };
 
     public void start_overdub1(){
         player1.pause();
@@ -304,21 +302,20 @@ public class MainActivity extends AppCompatActivity {
             trackNum2 += 1;
             recorder2.start();
             stopNonFirstRecord = new Timer();
-            stopNonFirstRecord.schedule(stopNonFirst2, time);
+//            stopNonFirstRecord.schedule(stopNonFirst2, time);
+            stopNonFirstRecord.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    recorder2.stop();
+                    player2.play();
+                    isPlaying2 = true;
+                    isRecorded2 = true;
+                    isRecording2 = false;
+                    cardImage2.setImageResource(pauseResId);
+                }
+            }, time);
         }
     }
-
-    private TimerTask stopNonFirst2 = new TimerTask() {
-        @Override
-        public void run() {
-            recorder2.stop();
-            player2.play();
-            isPlaying2 = true;
-            isRecorded2 = true;
-            isRecording2 = false;
-            cardImage2.setImageResource(pauseResId);
-        }
-    };
 
     public void start_overdub2(){
         player2.pause();
@@ -382,21 +379,19 @@ public class MainActivity extends AppCompatActivity {
             trackNum3 += 1;
             recorder3.start();
             stopNonFirstRecord = new Timer();
-            stopNonFirstRecord.schedule(stopNonFirst3, time);
+            stopNonFirstRecord.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    recorder3.stop();
+                    player3.play();
+                    isPlaying3 = true;
+                    isRecorded3 = true;
+                    isRecording3 = false;
+                    cardImage3.setImageResource(pauseResId);
+                }
+            }, time);
         }
     }
-
-    private TimerTask stopNonFirst3 = new TimerTask() {
-        @Override
-        public void run() {
-            recorder3.stop();
-            player3.play();
-            isPlaying3 = true;
-            isRecorded3 = true;
-            isRecording3 = false;
-            cardImage3.setImageResource(pauseResId);
-        }
-    };
 
     public void start_overdub3(){
         player3.pause();
@@ -460,21 +455,19 @@ public class MainActivity extends AppCompatActivity {
             trackNum4 += 1;
             recorder4.start();
             stopNonFirstRecord = new Timer();
-            stopNonFirstRecord.schedule(stopNonFirst4, time);
+            stopNonFirstRecord.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    recorder4.stop();
+                    player4.play();
+                    isPlaying4 = true;
+                    isRecorded4 = true;
+                    isRecording4 = false;
+                    cardImage4.setImageResource(pauseResId);
+                }
+            }, time);
         }
     }
-
-    private TimerTask stopNonFirst4 = new TimerTask() {
-        @Override
-        public void run() {
-            recorder4.stop();
-            player4.play();
-            isPlaying4 = true;
-            isRecorded4 = true;
-            isRecording4 = false;
-            cardImage4.setImageResource(pauseResId);
-        }
-    };
 
     public void start_overdub4(){
         player4.pause();
@@ -683,6 +676,10 @@ public class MainActivity extends AppCompatActivity {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                player1.stop();
+                player2.stop();
+                player3.stop();
+                player4.stop();
                 trackNum1 = 0;
                 trackNum2 = 0;
                 trackNum3 = 0;
