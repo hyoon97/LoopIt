@@ -1,6 +1,7 @@
 package com.example.loopit;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -43,20 +44,12 @@ public class MainActivity extends AppCompatActivity {
     ImageView cardImage3;
     ImageView cardImage4;
 
-    ProgressBar progressBar1;
-    ProgressBar progressBar2;
-    ProgressBar progressBar3;
-    ProgressBar progressBar4;
+
 
     int micResId;
     int recordResId;
     int pauseResId;
     int playResId;
-
-//    CardView overdubCard1;
-//    CardView overdubCard2;
-//    CardView overdubCard3;
-//    CardView overdubCard4;
 
     //Recorder and Player Variables
     private boolean isLoop = true;
@@ -126,6 +119,40 @@ public class MainActivity extends AppCompatActivity {
     private static String trackName3;
     private static String trackName4;
 
+    ProgressBar progressBar1;
+    ProgressBar progressBar2;
+    ProgressBar progressBar3;
+    ProgressBar progressBar4;
+
+    private int progress1 = 0;
+
+    private Handler mHandler = new Handler();
+
+    private void initProgressBar(){
+        progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
+        progressBar3 = (ProgressBar) findViewById(R.id.progressBar3);
+        progressBar4 = (ProgressBar) findViewById(R.id.progressBar4);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (progress1 < 100){
+                    progress1++;
+                    android.os.SystemClock.sleep(50);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar1.setProgress(progress1);
+                        }
+                    });
+                }
+            }
+        }).start();
+
+
+    }
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
@@ -175,8 +202,6 @@ public class MainActivity extends AppCompatActivity {
 
         progressBar4.setVisibility(View.VISIBLE);
         progressBar4.setProgress(75);
-
-//        overdubCard1 = (ImageView) this.findViewById(R.id.overdub);
     }
 
     private void initFloatingButtons() {
@@ -497,7 +522,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void stop_record4(){
         recorder4.stop();
-//        isFirst = false;
         player4.play();
         time = player4.getDuration();
     }
@@ -550,6 +574,7 @@ public class MainActivity extends AppCompatActivity {
         initFloatingButtons();
         initLabels();
 
+        initProgressBar();
         isFirst = true;
 
         player1 = new Player(track1, isLoop);
@@ -561,118 +586,111 @@ public class MainActivity extends AppCompatActivity {
 
         card1.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                if(!isRecording1 && !isRecorded1 && !isPlaying1){
-                    start_record1();
-                    isRecording1 = true;
-                    cardImage1.setImageResource(recordResId);
-                }
-                else if(isFirst && isRecording1 && !isRecorded1 && !isPlaying1){
-                    stop_record1();
-                    isFirst = false;
-                    isPlaying1 = true;
-                    isRecorded1 = true;
-                    isRecording1 = false;
-                    cardImage1.setImageResource(pauseResId);
-                }
-                else if(!isFirst && !isRecording1 && isRecorded1 && isPlaying1){
-                    stop1();
-                    isPlaying1 = false;
-                    cardImage1.setImageResource(playResId);
-                }
-                else if(!isFirst && !isRecording1 && isRecorded1 && !isPlaying1){
-                    play1();
-                    isPlaying1 = true;
-                    cardImage1.setImageResource(pauseResId);
-                }
+            if(!isRecording1 && !isRecorded1 && !isPlaying1){
+                start_record1();
+                isRecording1 = true;
+                cardImage1.setImageResource(recordResId);
+            }
+            else if(isFirst && isRecording1 && !isRecorded1 && !isPlaying1){
+                stop_record1();
+                isFirst = false;
+                isPlaying1 = true;
+                isRecorded1 = true;
+                isRecording1 = false;
+                cardImage1.setImageResource(pauseResId);
+            }
+            else if(!isFirst && !isRecording1 && isRecorded1 && isPlaying1){
+                stop1();
+                isPlaying1 = false;
+                cardImage1.setImageResource(playResId);
+            }
+            else if(!isFirst && !isRecording1 && isRecorded1 && !isPlaying1){
+                play1();
+                isPlaying1 = true;
+                cardImage1.setImageResource(pauseResId);
+            }
             }
         });
         card2.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                if(!isRecording2 && !isRecorded2 && !isPlaying2){
-                    start_record2();
-                    isRecording2 = true;
-                    cardImage2.setImageResource(recordResId);
-                }
-                else if(isFirst && isRecording2 && !isRecorded2 && !isPlaying2){
-                    stop_record2();
-                    isFirst = false;
-                    isPlaying2 = true;
-                    isRecorded2 = true;
-                    isRecording2 = false;
-                    cardImage2.setImageResource(pauseResId);
-                }
-                else if(!isFirst && !isRecording2 && isRecorded2 && isPlaying2){
-                    stop2();
-                    isPlaying2 = false;
-                    cardImage2.setImageResource(playResId);
-                }
-                else if(!isFirst && !isRecording2 && isRecorded2 && !isPlaying2){
-                    play2();
-                    isPlaying2 = true;
-                    cardImage2.setImageResource(pauseResId);
-                }
+            if(!isRecording2 && !isRecorded2 && !isPlaying2){
+                start_record2();
+                isRecording2 = true;
+                cardImage2.setImageResource(recordResId);
+            }
+            else if(isFirst && isRecording2 && !isRecorded2 && !isPlaying2){
+                stop_record2();
+                isFirst = false;
+                isPlaying2 = true;
+                isRecorded2 = true;
+                isRecording2 = false;
+                cardImage2.setImageResource(pauseResId);
+            }
+            else if(!isFirst && !isRecording2 && isRecorded2 && isPlaying2){
+                stop2();
+                isPlaying2 = false;
+                cardImage2.setImageResource(playResId);
+            }
+            else if(!isFirst && !isRecording2 && isRecorded2 && !isPlaying2){
+                play2();
+                isPlaying2 = true;
+                cardImage2.setImageResource(pauseResId);
+            }
             }
         });
         card3.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                if(!isRecording3 && !isRecorded3 && !isPlaying3){
-                    start_record3();
-                    isRecording3 = true;
-                    cardImage3.setImageResource(recordResId);
-                }
-                else if(isFirst && isRecording3 && !isRecorded3 && !isPlaying3){
-                    stop_record3();
-                    isFirst = false;
-                    isPlaying3 = true;
-                    isRecorded3 = true;
-                    isRecording3 = false;
-                    cardImage3.setImageResource(pauseResId);
-                }
-                else if(!isFirst &&!isRecording3 && isRecorded3 && isPlaying3){
-                    stop3();
-                    isPlaying3 = false;
-                    cardImage3.setImageResource(playResId);
-                }
-                else if(!isFirst &&!isRecording3 && isRecorded3 && !isPlaying3){
-                    play3();
-                    isPlaying3 = true;
-                    cardImage3.setImageResource(pauseResId);
-                }
+            if(!isRecording3 && !isRecorded3 && !isPlaying3){
+                start_record3();
+                isRecording3 = true;
+                cardImage3.setImageResource(recordResId);
+            }
+            else if(isFirst && isRecording3 && !isRecorded3 && !isPlaying3){
+                stop_record3();
+                isFirst = false;
+                isPlaying3 = true;
+                isRecorded3 = true;
+                isRecording3 = false;
+                cardImage3.setImageResource(pauseResId);
+            }
+            else if(!isFirst &&!isRecording3 && isRecorded3 && isPlaying3){
+                stop3();
+                isPlaying3 = false;
+                cardImage3.setImageResource(playResId);
+            }
+            else if(!isFirst &&!isRecording3 && isRecorded3 && !isPlaying3){
+                play3();
+                isPlaying3 = true;
+                cardImage3.setImageResource(pauseResId);
+            }
             }
         });
         card4.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                if(!isRecording4 && !isRecorded4 && !isPlaying4){
-                    start_record4();
-                    isRecording4 = true;
-                    cardImage4.setImageResource(recordResId);
-                }
-                else if(isFirst &&isRecording4 && !isRecorded4 && !isPlaying4){
-                    stop_record4();
-                    isFirst = false;
-                    isPlaying4 = true;
-                    isRecorded4 = true;
-                    isRecording4 = false;
-                    cardImage4.setImageResource(pauseResId);
-                }
-                else if(!isFirst && !isRecording4 && isRecorded4 && isPlaying4){
-                    stop4();
-                    isPlaying4 = false;
-                    cardImage4.setImageResource(playResId);
-                }
-                else if(!isFirst && !isRecording4 && isRecorded4 && !isPlaying4){
-                    play4();
-                    isPlaying4 = true;
-                    cardImage4.setImageResource(pauseResId);
-                }
+            if(!isRecording4 && !isRecorded4 && !isPlaying4){
+                start_record4();
+                isRecording4 = true;
+                cardImage4.setImageResource(recordResId);
+            }
+            else if(isFirst &&isRecording4 && !isRecorded4 && !isPlaying4){
+                stop_record4();
+                isFirst = false;
+                isPlaying4 = true;
+                isRecorded4 = true;
+                isRecording4 = false;
+                cardImage4.setImageResource(pauseResId);
+            }
+            else if(!isFirst && !isRecording4 && isRecorded4 && isPlaying4){
+                stop4();
+                isPlaying4 = false;
+                cardImage4.setImageResource(playResId);
+            }
+            else if(!isFirst && !isRecording4 && isRecorded4 && !isPlaying4){
+                play4();
+                isPlaying4 = true;
+                cardImage4.setImageResource(pauseResId);
+            }
             }
         });
-//        overdubCard1.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                if(isRecorded1 && isPlaying1){
-//                    start_record1();
-//                }
-//            }
-//        });
     }
 }
