@@ -118,12 +118,20 @@ public class MainActivity extends AppCompatActivity {
     private static String trackName3;
     private static String trackName4;
 
-    ProgressBar progressBar1;
-    ProgressBar progressBar2;
-    ProgressBar progressBar3;
-    ProgressBar progressBar4;
+    private ProgressBar progressBar1;
+    private ProgressBar progressBar2;
+    private ProgressBar progressBar3;
+    private ProgressBar progressBar4;
+
+    private boolean progress1Running = false;
+    private boolean progress2Running = false;
+    private boolean progress3Running = false;
+    private boolean progress4Running = false;
 
     private int progress1 = 0;
+    private int progress2 = 0;
+    private int progress3 = 0;
+    private int progress4 = 0;
 
     private Handler mHandler = new Handler();
 
@@ -132,13 +140,16 @@ public class MainActivity extends AppCompatActivity {
         progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
         progressBar3 = (ProgressBar) findViewById(R.id.progressBar3);
         progressBar4 = (ProgressBar) findViewById(R.id.progressBar4);
+    }
 
+    private void startProgressBar1(){
         new Thread(new Runnable() {
             @Override
             public void run() {
+
                 while (progress1 < 100){
-                    progress1++;
-                    android.os.SystemClock.sleep(50);
+                    progress1 ++;
+                    android.os.SystemClock.sleep(time / 100);
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -148,8 +159,60 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
 
+    private void startProgressBar2(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (progress2 < 100 && progress2Running){
+                    progress2++;
+                    android.os.SystemClock.sleep(50);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar2.setProgress(progress2);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
 
+    private void startProgressBar3(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (progress3 < 100 && progress3Running){
+                    progress3++;
+                    android.os.SystemClock.sleep(50);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar3.setProgress(progress3);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    private void startProgressBar4(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (progress4 < 100 && progress4Running){
+                    progress4++;
+                    android.os.SystemClock.sleep(50);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar4.setProgress(progress4);
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -571,6 +634,7 @@ public class MainActivity extends AppCompatActivity {
                 isRecording1 = true;
                 cardImage1.setImageResource(recordResId);
             }
+
             else if(isFirst && isRecording1 && !isRecorded1 && !isPlaying1){
                 stop_record1();
                 isFirst = false;
@@ -579,13 +643,16 @@ public class MainActivity extends AppCompatActivity {
                 isRecording1 = false;
                 cardImage1.setImageResource(pauseResId);
             }
+
             else if(!isFirst && !isRecording1 && isRecorded1 && isPlaying1){
                 stop1();
                 isPlaying1 = false;
                 cardImage1.setImageResource(playResId);
             }
+
             else if(!isFirst && !isRecording1 && isRecorded1 && !isPlaying1){
                 play1();
+                startProgressBar1();
                 isPlaying1 = true;
                 cardImage1.setImageResource(pauseResId);
             }
@@ -619,6 +686,7 @@ public class MainActivity extends AppCompatActivity {
             }
             }
         });
+
         card3.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
             if(!isRecording3 && !isRecorded3 && !isPlaying3){
@@ -646,6 +714,7 @@ public class MainActivity extends AppCompatActivity {
             }
             }
         });
+
         card4.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
             if(!isRecording4 && !isRecorded4 && !isPlaying4){
@@ -673,6 +742,7 @@ public class MainActivity extends AppCompatActivity {
             }
             }
         });
+
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
