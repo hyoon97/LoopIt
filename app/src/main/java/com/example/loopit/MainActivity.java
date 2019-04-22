@@ -512,6 +512,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initCards();
         initFloatingButtons();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         isFirst = true;
 

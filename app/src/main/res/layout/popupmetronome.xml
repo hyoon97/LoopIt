@@ -37,17 +37,20 @@
 
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@drawable/minus"/>
+                    android:background="@drawable/minus"
+                    android:id="@+id/dec_bpm_button"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="100"/>
+                    android:text="100"
+                    android:id="@+id/bpm_textView"/>
 
                 <Button
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@drawable/plus"/>
+                    android:background="@drawable/plus"
+                    android:id="@+id/inc_bpm_button"/>
 
 
             </LinearLayout>
@@ -61,7 +64,9 @@
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+                android:id="@+id/metronome_switch"
+                android:checked="false"/>
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -148,7 +153,8 @@
 
                 <Switch
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/beats_switch"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -158,16 +164,19 @@
                 <Button
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@drawable/minus"/>
+                    android:background="@drawable/minus"
+                    android:id="@+id/dec_beats_button"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"/>
+                    android:text="0"
+                    android:id="@+id/beats_textView"/>
                 <Button
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@drawable/plus"/>
+                    android:background="@drawable/plus"
+                    android:id="@+id/inc_beats_button"/>
             </LinearLayout>
 
             <LinearLayout
@@ -178,7 +187,8 @@
 
                 <Switch
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/countdown_switch"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -188,16 +198,19 @@
                 <Button
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@drawable/minus"/>
+                    android:background="@drawable/minus"
+                    android:id="@+id/dec_countdown_button"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"/>
+                    android:text="0"
+                    android:id="@+id/countdown_textView"/>
                 <Button
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@drawable/plus"/>
+                    android:background="@drawable/plus"
+                    android:id="@+id/inc_countdown_button"/>
             </LinearLayout>
 
             <LinearLayout
@@ -208,26 +221,30 @@
 
                 <Switch
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/duration_switch"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Duration"/>
+                    android:text="Duration" />
 
                 <Button
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@drawable/minus"/>
+                    android:background="@drawable/minus"
+                    android:id="@+id/dec_duration_button"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"/>
+                    android:text="0"
+                    android:id="@+id/duration_textView"/>
                 <Button
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@drawable/plus"/>
+                    android:background="@drawable/plus"
+                    android:id="@+id/inc_duration_button"/>
             </LinearLayout>
 
         </RelativeLayout>
