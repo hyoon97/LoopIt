@@ -21,13 +21,11 @@
         </activity>
 
         <activity android:name=".PopUpSettings"
-            android:theme="@style/PopUpTheme"
-            android:screenOrientation="portrait">
+            android:theme="@style/PopUpTheme">
         </activity>
 
         <activity android:name=".PopUpMetronome"
-            android:theme="@style/PopUpTheme"
-            android:screenOrientation="portrait">
+            android:theme="@style/PopUpTheme">
         </activity>
     </application>
 
