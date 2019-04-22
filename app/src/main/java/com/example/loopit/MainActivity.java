@@ -444,6 +444,7 @@ public class MainActivity extends AppCompatActivity {
             trackName4 = getExternalCacheDir().getAbsolutePath();
             trackName4 += "/track4"+ trackNum4 +".3gp";
             track4.add(trackName4);
+            recorder4 = new Recorder(trackName4);
             trackNum4 += 1;
             recorder4.start();
             stopNonFirstRecord = new Timer();
