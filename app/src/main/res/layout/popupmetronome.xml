@@ -74,8 +74,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_centerInParent="true"
-                android:layout_below="@+id/seekbar"
-                >
+                android:layout_below="@+id/seekbar">
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -91,65 +90,676 @@
 
             </RadioGroup>
 
-            <RadioGroup
+            <HorizontalScrollView
+                android:id="@+id/pitches"
                 android:layout_width="wrap_content"
-                android:id="@+id/scales"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_below="@+id/clickNote"
                 android:layout_centerInParent="true"
+                android:scrollbars="none"
                 android:padding="2dp">
 
-                <RadioButton
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="A3"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="Bb3"/>
+                    android:layout_height="wrap_content">
 
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch0"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
 
-                    android:text="B3."/>
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                            <TextView
+                                android:id="@+id/pitchValue0"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
 
-                    android:text="C4"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                        </RelativeLayout>
 
-                    android:text="Db3"/>
+                    </android.support.v7.widget.CardView>
 
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch1"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
 
-                    android:text="D4."/>
+                            <TextView
+                                android:id="@+id/pitchValue1"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                        </RelativeLayout>
 
-                    android:text="Eb4"/>
+                    </android.support.v7.widget.CardView>
 
-            </RadioGroup>
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch2"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue2"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch3"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue3"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch4"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue4"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch5"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue5"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch6"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue6"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch7"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue7"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch8"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue8"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch9"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue9"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch10"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue10"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch11"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue11"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch12"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue12"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch13"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue13"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch14"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue14"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch15"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue15"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch16"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue16"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch17"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue17"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch18"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue18"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch19"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue19"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch20"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue20"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch21"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue21"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch22"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue22"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:clickable="true"
+                        android:id="@+id/pitch23"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="6dp">
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/pitchValue23"
+                                android:textSize="18sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
+
+            </HorizontalScrollView>
 
             <LinearLayout
                 android:id="@+id/beats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/scales">
+                android:layout_below="@+id/pitches">
 
                 <Switch
                     android:layout_width="wrap_content"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Handler;
+import android.widget.TextView;
 
 public class Metronome implements Runnable{
 
@@ -17,7 +18,6 @@ public class Metronome implements Runnable{
     private Context mainConext;
     private int[] notes;
     private int note;
-
 
     public Metronome(int initBpm, Context context){
         handler = new Handler();

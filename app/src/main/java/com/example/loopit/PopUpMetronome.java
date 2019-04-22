@@ -1,7 +1,9 @@
 package com.example.loopit;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.webkit.ServiceWorkerClient;
@@ -39,6 +41,32 @@ public class PopUpMetronome extends Activity {
     private int duration = 0;
     private Switch durationSwitch;
     private boolean durationToggle = false;
+
+    private int currentNote = 0;
+
+    TextView[] pitchValues = new TextView[24];
+
+    CardView[] pitchCards = new CardView[24];
+
+    String[] pitches = {"C3", "Db3", "D3", "Eb3", "E3", "F3", "Gb3", "G3", "Ab3", "A3", "Bb3", "B3", "C4", "Db4", "D4", "Eb4", "E4", "F4", "Gb4", "G4", "Ab4", "A4", "Bb4", "B4"};
+
+    private void initPitches(){
+
+        for (int i = 0; i < pitches.length; ++i){
+            String pitchId = "pitchValue" + i;
+            int resId = getResources().getIdentifier(pitchId, "id", getPackageName());
+            pitchValues[i] = (TextView) findViewById(resId);
+            pitchValues[i].setText(pitches[i]);
+            pitchValues[i].setTextColor(Color.parseColor("#ffffff"));
+
+            String pitchCardId = "pitch" + i;
+            resId = getResources().getIdentifier(pitchCardId, "id", getPackageName());
+            pitchCards[i] = findViewById(resId);
+            pitchCards[i].setCardBackgroundColor(Color.parseColor("#42a7f4"));
+        }
+
+        pitchCards[currentNote].setCardBackgroundColor(Color.parseColor("#f49242"));
+    }
 
 
     private void initMetronome(){
@@ -215,6 +243,6 @@ public class PopUpMetronome extends Activity {
         initCountdown();
         initDuration();
 
-
+        initPitches();
     }
 }

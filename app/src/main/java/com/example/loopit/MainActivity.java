@@ -16,6 +16,9 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.app.AppCompatActivity;
+
+import org.w3c.dom.Text;
+
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
@@ -535,18 +538,16 @@ public class MainActivity extends AppCompatActivity {
         overdubText.setText("Over-Dub");
         toneText.setText("Tone");
         pitchText.setText("Pitch");
-
-//        Vector pitches = new Vector();
-//
-//        pitches.add("");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initCards();
         initFloatingButtons();
+        initLabels();
 
         isFirst = true;
 
