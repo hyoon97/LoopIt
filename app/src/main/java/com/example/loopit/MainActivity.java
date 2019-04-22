@@ -506,13 +506,47 @@ public class MainActivity extends AppCompatActivity {
         player4.stop();
     }
 
+    private void initLabels () {
+        cardImage1.setContentDescription("Record / Pause / Play");
+        cardImage2.setContentDescription("Record / Pause / Play");
+        cardImage3.setContentDescription("Record / Pause / Play");
+        cardImage4.setContentDescription("Record / Pause / Play");
+
+        TextView controlPanel = (TextView) findViewById(R.id.controlPanel);
+        TextView operations = (TextView) findViewById(R.id.operations);
+        TextView track1 = (TextView) findViewById(R.id.track1);
+        TextView track2 = (TextView) findViewById(R.id.track2);
+        TextView track3 = (TextView) findViewById(R.id.track3);
+        TextView track4 = (TextView) findViewById(R.id.track4);
+        TextView clearText = (TextView) findViewById(R.id.clearText);
+        TextView overdubText = (TextView) findViewById(R.id.overdubText);
+        TextView toneText = (TextView) findViewById(R.id.toneText);
+        TextView pitchText = (TextView) findViewById(R.id.pitchText);
+
+        controlPanel.setText("Control Panel");
+        operations.setText("Operations");
+
+        track1.setText("Track 1");
+        track2.setText("Track 2");
+        track3.setText("Track 3");
+        track4.setText("Track 4");
+
+        clearText.setText("Clear");
+        overdubText.setText("Over-Dub");
+        toneText.setText("Tone");
+        pitchText.setText("Pitch");
+
+//        Vector pitches = new Vector();
+//
+//        pitches.add("");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initCards();
         initFloatingButtons();
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         isFirst = true;
 
