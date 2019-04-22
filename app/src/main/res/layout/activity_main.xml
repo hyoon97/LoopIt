@@ -43,8 +43,8 @@
 
                 <ProgressBar
                     android:id="@+id/progressBar1"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
+                    android:layout_width="105dp"
+                    android:layout_height="105dp"
                     android:indeterminate="false"
                     android:progressDrawable="@drawable/circular_progress_bar"
                     android:background="@drawable/circle_shape"
@@ -96,8 +96,8 @@
 
                 <ProgressBar
                     android:id="@+id/progressBar2"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
+                    android:layout_width="105dp"
+                    android:layout_height="105dp"
                     android:indeterminate="false"
                     android:progressDrawable="@drawable/circular_progress_bar"
                     android:background="@drawable/circle_shape"
@@ -155,8 +155,8 @@
 
                 <ProgressBar
                     android:id="@+id/progressBar3"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
+                    android:layout_width="105dp"
+                    android:layout_height="105dp"
                     android:indeterminate="false"
                     android:progressDrawable="@drawable/circular_progress_bar"
                     android:background="@drawable/circle_shape"
@@ -212,8 +212,8 @@
 
                 <ProgressBar
                     android:id="@+id/progressBar4"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
+                    android:layout_width="105dp"
+                    android:layout_height="105dp"
                     android:indeterminate="false"
                     android:progressDrawable="@drawable/circular_progress_bar"
                     android:background="@drawable/circle_shape"

@@ -174,11 +174,6 @@ public class MainActivity extends AppCompatActivity {
         cardImage3 = (ImageView) this.findViewById(R.id.cardImage3);
         cardImage4 = (ImageView) this.findViewById(R.id.cardImage4);
 
-        progressBar1 = (ProgressBar) this.findViewById(R.id.progressBar1);
-        progressBar2 = (ProgressBar) this.findViewById(R.id.progressBar2);
-        progressBar3 = (ProgressBar) this.findViewById(R.id.progressBar3);
-        progressBar4 = (ProgressBar) this.findViewById(R.id.progressBar4);
-
         micResId = getResources().getIdentifier("mic", "drawable","com.example.loopit");
         recordResId = getResources().getIdentifier("record", "drawable","com.example.loopit");
         pauseResId = getResources().getIdentifier("pause", "drawable","com.example.loopit");
@@ -193,15 +188,6 @@ public class MainActivity extends AppCompatActivity {
         cardImage2.setVisibility(View.VISIBLE);
         cardImage3.setVisibility(View.VISIBLE);
         cardImage4.setVisibility(View.VISIBLE);
-
-        progressBar2.setVisibility(View.VISIBLE);
-        progressBar2.setProgress(25);
-
-        progressBar3.setVisibility(View.VISIBLE);
-        progressBar3.setProgress(50);
-
-        progressBar4.setVisibility(View.VISIBLE);
-        progressBar4.setProgress(75);
     }
 
     private void initFloatingButtons() {
