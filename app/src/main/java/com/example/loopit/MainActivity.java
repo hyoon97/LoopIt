@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -383,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
                     isRecording1 = false;
                     cardImage1.setImageResource(pauseResId);
                 }
-            }, time);
+            }, time+100);
 
 
         }
@@ -462,7 +463,7 @@ public class MainActivity extends AppCompatActivity {
                     isRecording2 = false;
                     cardImage2.setImageResource(pauseResId);
                 }
-            }, time);
+            }, time+100);
         }
     }
 
@@ -538,7 +539,7 @@ public class MainActivity extends AppCompatActivity {
                     isRecording3 = false;
                     cardImage3.setImageResource(pauseResId);
                 }
-            }, time);
+            }, time+100);
         }
     }
 
@@ -614,7 +615,7 @@ public class MainActivity extends AppCompatActivity {
                     isRecording4 = false;
                     cardImage4.setImageResource(pauseResId);
                 }
-            }, time);
+            }, time+100);
         }
     }
 
@@ -698,6 +699,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toast toast = Toast.makeText(MainActivity.this, "For better experience, please use earphones", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
 
         initCards();
         initFloatingButtons();
