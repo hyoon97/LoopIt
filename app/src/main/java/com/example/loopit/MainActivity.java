@@ -1,6 +1,7 @@
 package com.example.loopit;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -123,6 +124,12 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar3;
     private ProgressBar progressBar4;
 
+//    private ProgressBar starterBar1;
+//    private ProgressBar starterBar2;
+//    private ProgressBar starterBar3;
+//    private ProgressBar starterBar4;
+
+
     private boolean progress1Running = false;
     private boolean progress2Running = false;
     private boolean progress3Running = false;
@@ -143,12 +150,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startProgressBar1(){
+        progress1Running = true;
+        progressBar1.setVisibility(View.VISIBLE);
+        progress1 = 0;
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-                while (progress1 < 100){
-                    progress1 ++;
+                while (progress1Running && progress1 <= 100){
+                    ++progress1;
                     android.os.SystemClock.sleep(time / 100);
                     mHandler.post(new Runnable() {
                         @Override
@@ -156,65 +165,140 @@ public class MainActivity extends AppCompatActivity {
                             progressBar1.setProgress(progress1);
                         }
                     });
+
+                    if (progress1 == 100){
+                        progress1 = 0;
+                        android.os.SystemClock.sleep(time / 100);
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar1.setProgress(progress1);
+                            }
+                        });
+                    }
                 }
             }
         }).start();
     }
 
     private void startProgressBar2(){
+        progress2Running = true;
+        progressBar2.setVisibility(View.VISIBLE);
+        progress2 = 0;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (progress2 < 100 && progress2Running){
-                    progress2++;
-                    android.os.SystemClock.sleep(50);
+                while (progress2Running && progress2 <= 100){
+                    ++progress2;
+                    android.os.SystemClock.sleep(time / 100);
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             progressBar2.setProgress(progress2);
                         }
                     });
+
+                    if (progress2 == 100){
+                        progress2 = 0;
+                        android.os.SystemClock.sleep(time / 100);
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar2.setProgress(progress2);
+                            }
+                        });
+                    }
                 }
             }
         }).start();
     }
 
     private void startProgressBar3(){
+        progress3Running = true;
+        progressBar3.setVisibility(View.VISIBLE);
+        progress3 = 0;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (progress3 < 100 && progress3Running){
-                    progress3++;
-                    android.os.SystemClock.sleep(50);
+                while (progress3Running && progress3 <= 100){
+                    ++progress3;
+                    android.os.SystemClock.sleep(time / 100);
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             progressBar3.setProgress(progress3);
                         }
                     });
+
+                    if (progress3 == 100){
+                        progress3 = 0;
+                        android.os.SystemClock.sleep(time / 100);
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar3.setProgress(progress3);
+                            }
+                        });
+                    }
                 }
             }
         }).start();
     }
-
     private void startProgressBar4(){
+        progress4Running = true;
+        progressBar4.setVisibility(View.VISIBLE);
+        progress4 = 0;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (progress4 < 100 && progress4Running){
-                    progress4++;
-                    android.os.SystemClock.sleep(50);
+                while (progress4Running && progress4 <= 100){
+                    ++progress4;
+                    android.os.SystemClock.sleep(time / 100);
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             progressBar4.setProgress(progress4);
                         }
                     });
+
+                    if (progress4 == 100){
+                        progress4 = 0;
+                        android.os.SystemClock.sleep(time / 100);
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar4.setProgress(progress4);
+                            }
+                        });
+                    }
                 }
             }
         }).start();
     }
 
+    private void resetProgressBar1() {
+        progress1Running = false;
+        progressBar1.setVisibility(View.INVISIBLE);
+        progress1 = 0;
+    }
+
+    private void resetProgressBar2() {
+        progress2Running = false;
+        progressBar2.setVisibility(View.INVISIBLE);
+        progress2 = 0;
+    }
+
+    private void resetProgressBar3() {
+        progress3Running = false;
+        progressBar3.setVisibility(View.INVISIBLE);
+        progress3 = 0;
+    }
+
+    private void resetProgressBar4() {
+        progress4Running = false;
+        progressBar4.setVisibility(View.INVISIBLE);
+        progress4 = 0;
+    }
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
@@ -300,6 +384,8 @@ public class MainActivity extends AppCompatActivity {
                     cardImage1.setImageResource(pauseResId);
                 }
             }, time);
+
+
         }
     }
 
@@ -618,6 +704,7 @@ public class MainActivity extends AppCompatActivity {
         initLabels();
 
         initProgressBar();
+
         isFirst = true;
 
         player1 = new Player(track1, isLoop);
@@ -641,11 +728,13 @@ public class MainActivity extends AppCompatActivity {
                 isPlaying1 = true;
                 isRecorded1 = true;
                 isRecording1 = false;
+                startProgressBar1();
                 cardImage1.setImageResource(pauseResId);
             }
 
             else if(!isFirst && !isRecording1 && isRecorded1 && isPlaying1){
                 stop1();
+                resetProgressBar1();
                 isPlaying1 = false;
                 cardImage1.setImageResource(playResId);
             }
@@ -668,6 +757,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(isFirst && isRecording2 && !isRecorded2 && !isPlaying2){
                 stop_record2();
+                startProgressBar2();
                 isFirst = false;
                 isPlaying2 = true;
                 isRecorded2 = true;
@@ -676,11 +766,13 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(!isFirst && !isRecording2 && isRecorded2 && isPlaying2){
                 stop2();
+                resetProgressBar2();
                 isPlaying2 = false;
                 cardImage2.setImageResource(playResId);
             }
             else if(!isFirst && !isRecording2 && isRecorded2 && !isPlaying2){
                 play2();
+                startProgressBar2();
                 isPlaying2 = true;
                 cardImage2.setImageResource(pauseResId);
             }
@@ -696,6 +788,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(isFirst && isRecording3 && !isRecorded3 && !isPlaying3){
                 stop_record3();
+                startProgressBar3();
                 isFirst = false;
                 isPlaying3 = true;
                 isRecorded3 = true;
@@ -704,11 +797,13 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(!isFirst &&!isRecording3 && isRecorded3 && isPlaying3){
                 stop3();
+                resetProgressBar3();
                 isPlaying3 = false;
                 cardImage3.setImageResource(playResId);
             }
             else if(!isFirst &&!isRecording3 && isRecorded3 && !isPlaying3){
                 play3();
+                startProgressBar3();
                 isPlaying3 = true;
                 cardImage3.setImageResource(pauseResId);
             }
@@ -724,6 +819,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(isFirst &&isRecording4 && !isRecorded4 && !isPlaying4){
                 stop_record4();
+                startProgressBar4();
                 isFirst = false;
                 isPlaying4 = true;
                 isRecorded4 = true;
@@ -732,11 +828,13 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(!isFirst && !isRecording4 && isRecorded4 && isPlaying4){
                 stop4();
+                resetProgressBar4();
                 isPlaying4 = false;
                 cardImage4.setImageResource(playResId);
             }
             else if(!isFirst && !isRecording4 && isRecorded4 && !isPlaying4){
                 play4();
+                startProgressBar4();
                 isPlaying4 = true;
                 cardImage4.setImageResource(pauseResId);
             }

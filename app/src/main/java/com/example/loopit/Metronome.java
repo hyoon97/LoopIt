@@ -87,7 +87,7 @@ public class Metronome implements Runnable{
     @Override
     public void run() {
         int delay = 60000/bpm;
-        soundPool.play(met_sound,1,1,0,0,1);
+        soundPool.play(met_sound,(float)0.3,(float)0.3,0,0,1);
         handler.postDelayed(this, delay);
 
     }
