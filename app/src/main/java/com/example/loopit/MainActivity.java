@@ -384,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
                     isRecording1 = false;
                     cardImage1.setImageResource(pauseResId);
                 }
-            }, time+100);
+            }, time+220);
 
 
         }
@@ -463,7 +463,7 @@ public class MainActivity extends AppCompatActivity {
                     isRecording2 = false;
                     cardImage2.setImageResource(pauseResId);
                 }
-            }, time+100);
+            }, time+220);
         }
     }
 
@@ -539,7 +539,7 @@ public class MainActivity extends AppCompatActivity {
                     isRecording3 = false;
                     cardImage3.setImageResource(pauseResId);
                 }
-            }, time+100);
+            }, time+220);
         }
     }
 
@@ -615,7 +615,7 @@ public class MainActivity extends AppCompatActivity {
                     isRecording4 = false;
                     cardImage4.setImageResource(pauseResId);
                 }
-            }, time+100);
+            }, time+220);
         }
     }
 
