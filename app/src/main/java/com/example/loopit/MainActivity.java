@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     CardView trackControl2;
     CardView trackControl3;
     CardView trackControl4;
+    CardView allTracks;
 
     CardView clearButton;
 
@@ -429,6 +430,8 @@ public class MainActivity extends AppCompatActivity {
         trackControl3 = (CardView) this.findViewById(R.id.control3);
         trackControl4 = (CardView) this.findViewById(R.id.control4);
 
+        allTracks = (CardView) this.findViewById(R.id.control5);
+
         clearButton = (CardView) this.findViewById(R.id.clearTrack);
     }
 
@@ -493,7 +496,6 @@ public class MainActivity extends AppCompatActivity {
         overdubHandler.schedule(startOverdub1, currentPosition1);
         playerHandler.schedule(playOverdub1, time+currentPosition1+500);
     }
-
 
     private TimerTask startOverdub1 = new TimerTask() {
         public void run(){
@@ -772,6 +774,9 @@ public class MainActivity extends AppCompatActivity {
         TextView toneText = (TextView) findViewById(R.id.toneText);
         TextView pitchText = (TextView) findViewById(R.id.pitchText);
 
+        TextView allTracks = (TextView) findViewById(R.id.allTracks);
+        TextView playTracks = (TextView) findViewById(R.id.playAllText);
+
         controlPanel.setText("Control Panel");
         operations.setText("Operations");
 
@@ -779,6 +784,9 @@ public class MainActivity extends AppCompatActivity {
         track2.setText("Track 2");
         track3.setText("Track 3");
         track4.setText("Track 4");
+
+        allTracks.setText("All");
+        playTracks.setText("Play");
 
         clearText.setText("Clear");
         overdubText.setText("Over-Dub");
@@ -816,7 +824,6 @@ public class MainActivity extends AppCompatActivity {
                 start_record1();
                 isRecording1 = true;
                 cardImage1.setImageResource(recordResId);
-                disableTrackButtons(1);
             }
 
             else if(isFirst && isRecording1 && !isRecorded1 && !isPlaying1){
@@ -832,7 +839,6 @@ public class MainActivity extends AppCompatActivity {
             else if(!isFirst && !isRecording1 && isRecorded1 && isPlaying1){
                 stop1();
                 resetProgressBar1();
-                enableTrackButtons(1);
                 isPlaying1 = false;
                 cardImage1.setImageResource(playResId);
             }
