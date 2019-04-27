@@ -125,12 +125,6 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar3;
     private ProgressBar progressBar4;
 
-//    private ProgressBar starterBar1;
-//    private ProgressBar starterBar2;
-//    private ProgressBar starterBar3;
-//    private ProgressBar starterBar4;
-
-
     private boolean progress1Running = false;
     private boolean progress2Running = false;
     private boolean progress3Running = false;
@@ -245,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+
     private void startProgressBar4(){
         progress4Running = true;
         progressBar4.setVisibility(View.VISIBLE);
@@ -300,6 +295,91 @@ public class MainActivity extends AppCompatActivity {
         progressBar4.setVisibility(View.INVISIBLE);
         progress4 = 0;
     }
+
+    private void disableTrackButtons(int currentTrack){
+        if (currentTrack == 1){
+            card2.setEnabled(false);
+            card3.setEnabled(false);
+            card4.setEnabled(false);
+
+            card2.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card3.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card4.setCardBackgroundColor(Color.parseColor("#babababa"));
+        }
+
+        if (currentTrack == 2){
+            card1.setEnabled(false);
+            card3.setEnabled(false);
+            card4.setEnabled(false);
+
+            card1.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card3.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card4.setCardBackgroundColor(Color.parseColor("#babababa"));
+        }
+
+        if (currentTrack == 3){
+            card1.setEnabled(false);
+            card2.setEnabled(false);
+            card4.setEnabled(false);
+
+            card1.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card2.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card4.setCardBackgroundColor(Color.parseColor("#babababa"));
+        }
+
+        if (currentTrack == 4){
+            card2.setEnabled(false);
+            card3.setEnabled(false);
+            card1.setEnabled(false);
+
+            card2.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card3.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card1.setCardBackgroundColor(Color.parseColor("#babababa"));
+        }
+    }
+
+    private void enableTrackButtons(int currentTrack){
+        if (currentTrack == 1){
+            card2.setEnabled(true);
+            card3.setEnabled(true);
+            card4.setEnabled(true);
+
+            card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        }
+
+        if (currentTrack == 2){
+            card1.setEnabled(true);
+            card3.setEnabled(true);
+            card4.setEnabled(true);
+
+            card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        }
+
+        if (currentTrack == 3){
+            card1.setEnabled(true);
+            card2.setEnabled(true);
+            card4.setEnabled(true);
+
+            card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        }
+
+        if (currentTrack == 4){
+            card2.setEnabled(true);
+            card3.setEnabled(true);
+            card1.setEnabled(true);
+
+            card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        }
+    }
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
@@ -354,11 +434,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, PopUpSettings.class));
             }
         });
-
     }
 
     public void start_record1(){
-        if (isFirst == true){
+        if (isFirst){
             trackName1 = getExternalCacheDir().getAbsolutePath();
             trackName1 += "/track1"+ trackNum1 +".ogg";
             recorder1 = new Recorder(trackName1);
@@ -385,8 +464,6 @@ public class MainActivity extends AppCompatActivity {
                     cardImage1.setImageResource(pauseResId);
                 }
             }, time+220);
-
-
         }
     }
 
@@ -403,6 +480,7 @@ public class MainActivity extends AppCompatActivity {
         overdubHandler.schedule(startOverdub1, currentPosition1);
         playerHandler.schedule(playOverdub1, time+currentPosition1+500);
     }
+
 
     private TimerTask startOverdub1 = new TimerTask() {
         public void run(){
@@ -436,7 +514,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start_record2(){
-        if (isFirst == true){
+        if (isFirst){
             trackName2 = getExternalCacheDir().getAbsolutePath();
             trackName2 += "/track2"+ trackNum2 +".ogg";
             recorder2 = new Recorder(trackName2);
@@ -513,7 +591,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start_record3(){
-        if (isFirst == true){
+        if (isFirst){
             trackName3 = getExternalCacheDir().getAbsolutePath();
             trackName3 += "/track3"+ trackNum3 +".ogg";
             recorder3 = new Recorder(trackName3);
@@ -589,7 +667,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start_record4(){
-        if (isFirst == true){
+        if (isFirst){
             trackName4 = getExternalCacheDir().getAbsolutePath();
             trackName4 += "/track4"+ trackNum4 +".ogg";
             recorder4 = new Recorder(trackName4);
@@ -700,7 +778,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toast toast = Toast.makeText(MainActivity.this, "For better experience, please use earphones", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(MainActivity.this, "Please use earphones for the best experience.", Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
@@ -725,21 +803,23 @@ public class MainActivity extends AppCompatActivity {
                 start_record1();
                 isRecording1 = true;
                 cardImage1.setImageResource(recordResId);
+                disableTrackButtons(1);
             }
 
             else if(isFirst && isRecording1 && !isRecorded1 && !isPlaying1){
                 stop_record1();
+                startProgressBar1();
                 isFirst = false;
                 isPlaying1 = true;
                 isRecorded1 = true;
                 isRecording1 = false;
-                startProgressBar1();
                 cardImage1.setImageResource(pauseResId);
             }
 
             else if(!isFirst && !isRecording1 && isRecorded1 && isPlaying1){
                 stop1();
                 resetProgressBar1();
+                enableTrackButtons(1);
                 isPlaying1 = false;
                 cardImage1.setImageResource(playResId);
             }
@@ -874,6 +954,11 @@ public class MainActivity extends AppCompatActivity {
                 cardImage2.setImageResource(micResId);
                 cardImage3.setImageResource(micResId);
                 cardImage4.setImageResource(micResId);
+
+                resetProgressBar1();
+                resetProgressBar2();
+                resetProgressBar3();
+                resetProgressBar4();
             }
         });
     }
