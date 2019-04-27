@@ -51,7 +51,15 @@ public class MainActivity extends AppCompatActivity {
     int pauseResId;
     int playResId;
 
+    CardView trackControl1;
+    CardView trackControl2;
+    CardView trackControl3;
+    CardView trackControl4;
+
     CardView clearButton;
+
+    int trackControlNum;
+
     //Recorder and Player Variables
     private boolean isLoop = true;
 
@@ -415,6 +423,11 @@ public class MainActivity extends AppCompatActivity {
         cardImage2.setVisibility(View.VISIBLE);
         cardImage3.setVisibility(View.VISIBLE);
         cardImage4.setVisibility(View.VISIBLE);
+
+        trackControl1 = (CardView) this.findViewById(R.id.control1);
+        trackControl2 = (CardView) this.findViewById(R.id.control2);
+        trackControl3 = (CardView) this.findViewById(R.id.control3);
+        trackControl4 = (CardView) this.findViewById(R.id.control4);
 
         clearButton = (CardView) this.findViewById(R.id.clearTrack);
     }
@@ -926,39 +939,95 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        trackControl1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trackControlNum = 1;
+            }
+        });
+
+        trackControl2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trackControlNum = 2;
+            }
+        });
+
+        trackControl3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trackControlNum = 3;
+            }
+        });
+
+        trackControl4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trackControlNum = 4;
+            }
+        });
+
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                player1.stop();
-                player2.stop();
-                player3.stop();
-                player4.stop();
-                trackNum1 = 0;
-                trackNum2 = 0;
-                trackNum3 = 0;
-                trackNum4 = 0;
-                isFirst = true;
-                isRecording1 = false;
-                isRecording2 = false;
-                isRecording3 = false;
-                isRecording4 = false;
-                isRecorded1 = false;
-                isRecorded2 = false;
-                isRecorded3 = false;
-                isRecorded4 = false;
-                isPlaying1 = false;
-                isPlaying2 = false;
-                isPlaying3 = false;
-                isPlaying4 = false;
-                cardImage1.setImageResource(micResId);
-                cardImage2.setImageResource(micResId);
-                cardImage3.setImageResource(micResId);
-                cardImage4.setImageResource(micResId);
+                switch (trackControlNum){
+                    case 1:
+                        player1.stop();
+                        trackNum1 = 0;
+                        isRecording1 = false;
+                        isRecorded1 = false;
+                        isPlaying1 = false;
+                        cardImage1.setImageResource(micResId);
+                        resetProgressBar1();
+                        if(!isRecorded2 && !isRecorded3 && !isRecorded4){
+                            isFirst = true;
+                        }
+                        break;
 
-                resetProgressBar1();
-                resetProgressBar2();
-                resetProgressBar3();
-                resetProgressBar4();
+                    case 2:
+                        player2.stop();
+                        trackNum2 = 0;
+                        isRecording2 = false;
+                        isRecorded2 = false;
+                        isPlaying2 = false;
+                        cardImage2.setImageResource(micResId);
+                        resetProgressBar2();
+                        if(!isRecorded1 && !isRecorded3 && !isRecorded4){
+                            isFirst = true;
+                        }
+                        break;
+
+                    case 3:
+                        player3.stop();
+                        isRecording3 = false;
+                        isRecorded3 = false;
+                        isPlaying3 = false;
+                        cardImage3.setImageResource(micResId);
+                        resetProgressBar3();
+                        if(!isRecorded1 && !isRecorded2 && !isRecorded4){
+                            isFirst = true;
+                        }
+                        break;
+
+                    case 4:
+                        player4.stop();
+                        trackNum3 = 0;
+                        trackNum4 = 0;
+                        isRecording4 = false;
+                        isRecorded4 = false;
+                        isPlaying4 = false;
+                        cardImage4.setImageResource(micResId);
+                        resetProgressBar4();
+                        if(!isRecorded1 && !isRecorded2 && !isRecorded3){
+                            isFirst = true;
+                        }
+                        break;
+                    default:
+                        Toast toast = Toast.makeText(MainActivity.this, "Please select one of the tracks in the control panel to use the operation panel.", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        break;
+                }
             }
         });
     }
