@@ -15,10 +15,9 @@ public class Player {
     private String fileName;
     private boolean isLoop;
     private int time;
-    private PlaybackParams params;
+//    private PlaybackParams params;
     private int currentPosition;
     private ArrayList<String> track;
-
 
     Player(ArrayList<String> trackList, boolean loop){
         track = trackList;

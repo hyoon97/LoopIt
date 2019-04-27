@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     CardView allTracks;
 
     CardView clearButton;
+    CardView overdubButton;
+    CardView playButton;
 
     int trackControlNum;
 
@@ -433,6 +435,8 @@ public class MainActivity extends AppCompatActivity {
         allTracks = (CardView) this.findViewById(R.id.control5);
 
         clearButton = (CardView) this.findViewById(R.id.clearTrack);
+        overdubButton = (CardView) this.findViewById(R.id.overdub);
+        playButton = (CardView) this.findViewById(R.id.playAll);
     }
 
     private void initFloatingButtons() {
@@ -484,35 +488,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start_overdub1(){
-        player1.pause();
-        currentPosition1 = player1.getCurrentPosition();
-        player1.play();
         trackName1 = getExternalCacheDir().getAbsolutePath();
         trackName1 += "/track1"+ trackNum1 +".ogg";
+        overdub1 = new Overdub(trackName1, time);
         track1.add(trackName1);
         trackNum1 += 1;
-        overdubHandler = new Timer();
-        playerHandler = new Timer();
-        overdubHandler.schedule(startOverdub1, currentPosition1);
-        playerHandler.schedule(playOverdub1, time+currentPosition1+500);
+        overdub1.start();
+        stopNonFirstRecord = new Timer();
+        stopNonFirstRecord.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                player1.playPrevious();
+                overdubPlayer1.play();
+                isPlaying1 = true;
+                isRecorded1 = true;
+                isRecording1 = false;
+                cardImage1.setImageResource(pauseResId);
+            }
+        }, time+220);
     }
 
-    private TimerTask startOverdub1 = new TimerTask() {
-        public void run(){
-            player1.stop();
-            player1.playPrevious();
-            overdub1 = new Overdub(trackName1, time);
-            overdub1.start();
-        }
-    };
-
-    private TimerTask playOverdub1 = new TimerTask() {
-        public void run(){
-            player1.stop();
-            player1 = new Player(track1, isLoop);
-            player1.play();
-        }
-    };
+//    public void start_overdub1(){
+//        player1.pause();
+//        currentPosition1 = player1.getCurrentPosition();
+//        player1.play();
+//        trackName1 = getExternalCacheDir().getAbsolutePath();
+//        trackName1 += "/track1"+ trackNum1 +".ogg";
+//        track1.add(trackName1);
+//        trackNum1 += 1;
+//        overdubHandler = new Timer();
+//        playerHandler = new Timer();
+//        overdubHandler.schedule(startOverdub1, currentPosition1);
+//        playerHandler.schedule(playOverdub1, time+currentPosition1+500);
+//    }
+//
+//    private TimerTask startOverdub1 = new TimerTask() {
+//        public void run(){
+//            player1.stop();
+//            player1.playPrevious();
+//            overdub1 = new Overdub(trackName1, time);
+//            overdub1.start();
+//        }
+//    };
+//
+//    private TimerTask playOverdub1 = new TimerTask() {
+//        public void run(){
+//            player1.stop();
+//            player1 = new Player(track1, isLoop);
+//            player1.play();
+//        }
+//    };
 
     public void stop_record1(){
         recorder1.stop();
@@ -521,11 +546,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void play1(){
-        player1.play();
+        if(trackNum1 == 1)
+            player1.play();
+        else{
+            player1.playPrevious();
+            overdubPlayer1.play();
+        }
     }
 
     public void stop1(){
         player1.stop();
+        overdubPlayer1.stop();
     }
 
     public void start_record2(){
@@ -560,49 +591,45 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void start_overdub2(){
-        player2.pause();
-        currentPosition2 = player2.getCurrentPosition();
-        player2.play();
-        trackName2 = getExternalCacheDir().getAbsolutePath();
-        trackName2 += "/track2"+ trackNum2 +".ogg";
-        track2.add(trackName2);
-        trackNum2 += 1;
-        overdubHandler = new Timer();
-        playerHandler = new Timer();
-        overdubHandler.schedule(startOverdub2, currentPosition2);
-        playerHandler.schedule(playOverdub2, time+currentPosition2+500);
-    }
-
-    private TimerTask startOverdub2 = new TimerTask() {
-        public void run(){
-            player2.stop();
-            player2.playPrevious();
-            overdub2 = new Overdub(trackName2, time);
-            overdub2.start();
-        }
-    };
-
-    private TimerTask playOverdub2 = new TimerTask() {
-        public void run(){
-            player2.stop();
-            player2 = new Player(track2, isLoop);
-            player2.play();
-        }
-    };
-
     public void stop_record2(){
         recorder2.stop();
         player2.play();
         time = player2.getDuration();
     }
 
+    public void start_overdub2(){
+        trackName2 = getExternalCacheDir().getAbsolutePath();
+        trackName2 += "/track2"+ trackNum2 +".ogg";
+        overdub2 = new Overdub(trackName2, time);
+        track2.add(trackName2);
+        trackNum2 += 1;
+        overdub2.start();
+        stopNonFirstRecord = new Timer();
+        stopNonFirstRecord.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                player2.playPrevious();
+                overdubPlayer2.play();
+                isPlaying2 = true;
+                isRecorded2 = true;
+                isRecording2 = false;
+                cardImage2.setImageResource(pauseResId);
+            }
+        }, time+220);
+    }
+
     public void play2(){
-        player2.play();
+        if(trackNum2 == 1)
+            player2.play();
+        else{
+            player2.playPrevious();
+            overdubPlayer2.play();
+        }
     }
 
     public void stop2(){
         player2.stop();
+        overdubPlayer2.stop();
     }
 
     public void start_record3(){
@@ -636,49 +663,45 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void start_overdub3(){
-        player3.pause();
-        currentPosition3 = player3.getCurrentPosition();
-        player3.play();
-        trackName3 = getExternalCacheDir().getAbsolutePath();
-        trackName3 += "/track3"+ trackNum3 +".ogg";
-        track3.add(trackName3);
-        trackNum3 += 1;
-        overdubHandler = new Timer();
-        playerHandler = new Timer();
-        overdubHandler.schedule(startOverdub3, currentPosition3);
-        playerHandler.schedule(playOverdub3, time+currentPosition3+500);
-    }
-
-    private TimerTask startOverdub3 = new TimerTask() {
-        public void run(){
-            player3.stop();
-            player3.playPrevious();
-            overdub3 = new Overdub(trackName3, time);
-            overdub3.start();
-        }
-    };
-
-    private TimerTask playOverdub3 = new TimerTask() {
-        public void run(){
-            player3.stop();
-            player3 = new Player(track3, isLoop);
-            player3.play();
-        }
-    };
-
     public void stop_record3(){
         recorder3.stop();
         player3.play();
         time = player3.getDuration();
     }
 
+    public void start_overdub3(){
+        trackName3 = getExternalCacheDir().getAbsolutePath();
+        trackName3 += "/track3"+ trackNum3 +".ogg";
+        overdub3 = new Overdub(trackName3, time);
+        track3.add(trackName3);
+        trackNum3 += 1;
+        overdub3.start();
+        stopNonFirstRecord = new Timer();
+        stopNonFirstRecord.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                player3.playPrevious();
+                overdubPlayer3.play();
+                isPlaying3 = true;
+                isRecorded3 = true;
+                isRecording3 = false;
+                cardImage3.setImageResource(pauseResId);
+            }
+        }, time+220);
+    }
+
     public void play3(){
-        player3.play();
+        if(trackNum3 == 1)
+            player3.play();
+        else{
+            player3.playPrevious();
+            overdubPlayer3.play();
+        }
     }
 
     public void stop3(){
         player3.stop();
+        overdubPlayer3.stop();
     }
 
     public void start_record4(){
@@ -712,49 +735,45 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void start_overdub4(){
-        player4.pause();
-        currentPosition4 = player4.getCurrentPosition();
-        player4.play();
-        trackName4 = getExternalCacheDir().getAbsolutePath();
-        trackName4 += "/track4"+ trackNum4 +".ogg";
-        track4.add(trackName4);
-        trackNum4 += 1;
-        overdubHandler = new Timer();
-        playerHandler = new Timer();
-        overdubHandler.schedule(startOverdub4, currentPosition4);
-        playerHandler.schedule(playOverdub4, time+currentPosition4+500);
-    }
-
-    private TimerTask startOverdub4 = new TimerTask() {
-        public void run(){
-            player4.stop();
-            player4.playPrevious();
-            overdub4 = new Overdub(trackName4, time);
-            overdub4.start();
-        }
-    };
-
-    private TimerTask playOverdub4 = new TimerTask() {
-        public void run(){
-            player4.stop();
-            player4 = new Player(track4, isLoop);
-            player4.play();
-        }
-    };
-
     public void stop_record4(){
         recorder4.stop();
         player4.play();
         time = player4.getDuration();
     }
 
+    public void start_overdub4(){
+        trackName4 = getExternalCacheDir().getAbsolutePath();
+        trackName4 += "/track4"+ trackNum1 +".ogg";
+        overdub4 = new Overdub(trackName4, time);
+        track4.add(trackName1);
+        trackNum4 += 1;
+        overdub4.start();
+        stopNonFirstRecord = new Timer();
+        stopNonFirstRecord.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                player4.playPrevious();
+                overdubPlayer4.play();
+                isPlaying4 = true;
+                isRecorded4 = true;
+                isRecording4 = false;
+                cardImage4.setImageResource(pauseResId);
+            }
+        }, time+220);
+    }
+
     public void play4(){
-        player4.play();
+        if(trackNum4 == 1)
+            player4.play();
+        else{
+            player4.playPrevious();
+            overdubPlayer4.play();
+        }
     }
 
     public void stop4(){
         player4.stop();
+        overdubPlayer4.stop();
     }
 
     private void initLabels () {
@@ -815,6 +834,11 @@ public class MainActivity extends AppCompatActivity {
         player2 = new Player(track2, isLoop);
         player3 = new Player(track3, isLoop);
         player4 = new Player(track4, isLoop);
+
+        overdubPlayer1 = new Player(track1, isLoop);
+        overdubPlayer2 = new Player(track2, isLoop);
+        overdubPlayer3 = new Player(track3, isLoop);
+        overdubPlayer4 = new Player(track4, isLoop);
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
@@ -973,6 +997,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        allTracks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trackControlNum = 5;
+            }
+        });
+
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1005,6 +1036,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case 3:
                         player3.stop();
+                        trackNum3 = 0;
                         isRecording3 = false;
                         isRecorded3 = false;
                         isPlaying3 = false;
@@ -1017,7 +1049,6 @@ public class MainActivity extends AppCompatActivity {
 
                     case 4:
                         player4.stop();
-                        trackNum3 = 0;
                         trackNum4 = 0;
                         isRecording4 = false;
                         isRecorded4 = false;
@@ -1028,6 +1059,38 @@ public class MainActivity extends AppCompatActivity {
                             isFirst = true;
                         }
                         break;
+
+                    case 5:
+                        player1.stop();
+                        player2.stop();
+                        player3.stop();
+                        player4.stop();
+                        trackNum1 = 0;
+                        trackNum2 = 0;
+                        trackNum3 = 0;
+                        trackNum4 = 0;
+                        isRecording1 = false;
+                        isRecording2 = false;
+                        isRecording3 = false;
+                        isRecording4 = false;
+                        isRecorded1 = false;
+                        isRecorded2 = false;
+                        isRecorded3 = false;
+                        isRecorded4 = false;
+                        isPlaying1 = false;
+                        isPlaying2 = false;
+                        isPlaying3 = false;
+                        isPlaying4 = false;
+                        cardImage1.setImageResource(micResId);
+                        cardImage2.setImageResource(micResId);
+                        cardImage3.setImageResource(micResId);
+                        cardImage4.setImageResource(micResId);
+                        resetProgressBar1();
+                        resetProgressBar2();
+                        resetProgressBar3();
+                        resetProgressBar4();
+                        break;
+
                     default:
                         Toast toast = Toast.makeText(MainActivity.this, "Please select one of the tracks in the control panel to use the operation panel.", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
@@ -1036,5 +1099,85 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        overdubButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (trackControlNum){
+                    case 1:
+                        if(isPlaying1){
+                            stop1();
+                        }
+                        cardImage1.setImageResource(recordResId);
+                        start_overdub1();
+                        isPlaying1 = false;
+                        isRecording1 = true;
+                        break;
+                    case 2:
+                        if(isPlaying2){
+                            stop2();
+                        }
+                        cardImage2.setImageResource(recordResId);
+                        start_overdub2();
+                        isPlaying2 = false;
+                        isRecording2 = true;
+                        break;
+                    case 3:
+                        if(isPlaying3){
+                            stop3();
+                        }
+                        cardImage3.setImageResource(recordResId);
+                        start_overdub3();
+                        isPlaying3 = false;
+                        isRecording3 = true;
+                        break;
+                    case 4:
+                        if(isPlaying4){
+                            stop4();
+                        }
+                        cardImage4.setImageResource(recordResId);
+                        start_overdub4();
+                        isPlaying4 = false;
+                        isRecording4 = true;
+                        break;
+                    default:
+                        Toast toast = Toast.makeText(MainActivity.this, "Please select track 1, 2, 3, or 4 in the control panel to use this function.", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        break;
+                }
+            }
+        });
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isPlaying1){
+                    play1();
+                    startProgressBar1();
+                    isPlaying1 = true;
+                    cardImage1.setImageResource(pauseResId);
+                }
+                if (!isPlaying2){
+                    play2();
+                    startProgressBar2();
+                    isPlaying2 = true;
+                    cardImage2.setImageResource(pauseResId);
+                }
+                if (!isPlaying3){
+                    play3();
+                    startProgressBar3();
+                    isPlaying3 = true;
+                    cardImage3.setImageResource(pauseResId);
+                }
+                if (!isPlaying4){
+                    play4();
+                    startProgressBar4();
+                    isPlaying4 = true;
+                    cardImage4.setImageResource(pauseResId);
+                }
+            }
+        });
+
     }
 }
