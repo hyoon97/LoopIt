@@ -148,6 +148,12 @@ public class MainActivity extends AppCompatActivity {
 
     private Handler mHandler = new Handler();
 
+
+    private boolean track1Selected = false;
+    private boolean track2Selected = false;
+    private boolean track3Selected = false;
+    private boolean track4Selected = false;
+
     private void initProgressBar(){
         progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
@@ -313,9 +319,9 @@ public class MainActivity extends AppCompatActivity {
             card3.setEnabled(false);
             card4.setEnabled(false);
 
-            card2.setCardBackgroundColor(Color.parseColor("#babababa"));
-            card3.setCardBackgroundColor(Color.parseColor("#babababa"));
-            card4.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card2.setCardBackgroundColor(Color.parseColor("#bababa"));
+            card3.setCardBackgroundColor(Color.parseColor("#bababa"));
+            card4.setCardBackgroundColor(Color.parseColor("#bababa"));
         }
 
         if (currentTrack == 2){
@@ -323,9 +329,9 @@ public class MainActivity extends AppCompatActivity {
             card3.setEnabled(false);
             card4.setEnabled(false);
 
-            card1.setCardBackgroundColor(Color.parseColor("#babababa"));
-            card3.setCardBackgroundColor(Color.parseColor("#babababa"));
-            card4.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card1.setCardBackgroundColor(Color.parseColor("#bababa"));
+            card3.setCardBackgroundColor(Color.parseColor("#bababa"));
+            card4.setCardBackgroundColor(Color.parseColor("#bababa"));
         }
 
         if (currentTrack == 3){
@@ -333,9 +339,9 @@ public class MainActivity extends AppCompatActivity {
             card2.setEnabled(false);
             card4.setEnabled(false);
 
-            card1.setCardBackgroundColor(Color.parseColor("#babababa"));
-            card2.setCardBackgroundColor(Color.parseColor("#babababa"));
-            card4.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card1.setCardBackgroundColor(Color.parseColor("#bababa"));
+            card2.setCardBackgroundColor(Color.parseColor("#bababa"));
+            card4.setCardBackgroundColor(Color.parseColor("#bababa"));
         }
 
         if (currentTrack == 4){
@@ -343,9 +349,9 @@ public class MainActivity extends AppCompatActivity {
             card3.setEnabled(false);
             card1.setEnabled(false);
 
-            card2.setCardBackgroundColor(Color.parseColor("#babababa"));
-            card3.setCardBackgroundColor(Color.parseColor("#babababa"));
-            card1.setCardBackgroundColor(Color.parseColor("#babababa"));
+            card2.setCardBackgroundColor(Color.parseColor("#bababa"));
+            card3.setCardBackgroundColor(Color.parseColor("#bababa"));
+            card1.setCardBackgroundColor(Color.parseColor("#bababa"));
         }
     }
 
@@ -846,6 +852,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
             if(!isRecording1 && !isRecorded1 && !isPlaying1){
                 start_record1();
+//                disableTrackButtons(1);
                 isRecording1 = true;
                 cardImage1.setImageResource(recordResId);
             }
@@ -853,6 +860,7 @@ public class MainActivity extends AppCompatActivity {
             else if(isFirst && isRecording1 && !isRecorded1 && !isPlaying1){
                 stop_record1();
                 startProgressBar1();
+//                enableTrackButtons(1);
                 isFirst = false;
                 isPlaying1 = true;
                 isRecorded1 = true;
@@ -863,12 +871,14 @@ public class MainActivity extends AppCompatActivity {
             else if(!isFirst && !isRecording1 && isRecorded1 && isPlaying1){
                 stop1();
                 resetProgressBar1();
+//                enableTrackButtons(1);
                 isPlaying1 = false;
                 cardImage1.setImageResource(playResId);
             }
 
             else if(!isFirst && !isRecording1 && isRecorded1 && !isPlaying1){
                 play1();
+//                enableTrackButtons(1);
                 startProgressBar1();
                 isPlaying1 = true;
                 cardImage1.setImageResource(pauseResId);
@@ -880,12 +890,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
             if(!isRecording2 && !isRecorded2 && !isPlaying2){
                 start_record2();
+//                disableTrackButtons(2);
                 isRecording2 = true;
                 cardImage2.setImageResource(recordResId);
             }
             else if(isFirst && isRecording2 && !isRecorded2 && !isPlaying2){
                 stop_record2();
                 startProgressBar2();
+//                enableTrackButtons(2);
                 isFirst = false;
                 isPlaying2 = true;
                 isRecorded2 = true;
@@ -895,12 +907,14 @@ public class MainActivity extends AppCompatActivity {
             else if(!isFirst && !isRecording2 && isRecorded2 && isPlaying2){
                 stop2();
                 resetProgressBar2();
+//                enableTrackButtons(2);
                 isPlaying2 = false;
                 cardImage2.setImageResource(playResId);
             }
             else if(!isFirst && !isRecording2 && isRecorded2 && !isPlaying2){
                 play2();
                 startProgressBar2();
+//                enableTrackButtons(2);
                 isPlaying2 = true;
                 cardImage2.setImageResource(pauseResId);
             }
@@ -911,12 +925,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
             if(!isRecording3 && !isRecorded3 && !isPlaying3){
                 start_record3();
+//                disableTrackButtons(3);
                 isRecording3 = true;
                 cardImage3.setImageResource(recordResId);
             }
             else if(isFirst && isRecording3 && !isRecorded3 && !isPlaying3){
                 stop_record3();
                 startProgressBar3();
+//                enableTrackButtons(3);
                 isFirst = false;
                 isPlaying3 = true;
                 isRecorded3 = true;
@@ -926,12 +942,14 @@ public class MainActivity extends AppCompatActivity {
             else if(!isFirst &&!isRecording3 && isRecorded3 && isPlaying3){
                 stop3();
                 resetProgressBar3();
+//                enableTrackButtons(3);
                 isPlaying3 = false;
                 cardImage3.setImageResource(playResId);
             }
             else if(!isFirst &&!isRecording3 && isRecorded3 && !isPlaying3){
                 play3();
                 startProgressBar3();
+//                enableTrackButtons(3);
                 isPlaying3 = true;
                 cardImage3.setImageResource(pauseResId);
             }
@@ -942,12 +960,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
             if(!isRecording4 && !isRecorded4 && !isPlaying4){
                 start_record4();
+//                disableTrackButtons(4);
                 isRecording4 = true;
                 cardImage4.setImageResource(recordResId);
             }
-            else if(isFirst &&isRecording4 && !isRecorded4 && !isPlaying4){
+            else if(isFirst && isRecording4 && !isRecorded4 && !isPlaying4){
                 stop_record4();
                 startProgressBar4();
+//                enableTrackButtons(4);
                 isFirst = false;
                 isPlaying4 = true;
                 isRecorded4 = true;
@@ -957,12 +977,14 @@ public class MainActivity extends AppCompatActivity {
             else if(!isFirst && !isRecording4 && isRecorded4 && isPlaying4){
                 stop4();
                 resetProgressBar4();
+//                enableTrackButtons(4);
                 isPlaying4 = false;
                 cardImage4.setImageResource(playResId);
             }
             else if(!isFirst && !isRecording4 && isRecorded4 && !isPlaying4){
                 play4();
                 startProgressBar4();
+//                enableTrackButtons(4);
                 isPlaying4 = true;
                 cardImage4.setImageResource(pauseResId);
             }
@@ -973,6 +995,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 trackControlNum = 1;
+//                track1Selected = !track1Selected;
+//                if (track1Selected){
+//                    trackControl1.setCardBackgroundColor(Color.parseColor("#bababa"));
+//                }
+//                else{
+//                    trackControl1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+//                }
             }
         });
 

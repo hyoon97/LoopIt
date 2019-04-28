@@ -414,8 +414,7 @@
             app:cardElevation="6dp"
             app:cardCornerRadius="7dp"
             android:layout_margin="12dp"
-            app:cardBackgroundColor="#f49242"
-            >
+            app:cardBackgroundColor="#f49242">
 
             <ScrollView
                 android:layout_width="match_parent"
