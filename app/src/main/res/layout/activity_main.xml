@@ -266,13 +266,13 @@
             app:cardBackgroundColor="#42a7f4">
 
             <ScrollView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none">
 
                 <LinearLayout
                     android:id="@+id/controlGrid"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -297,7 +297,7 @@
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/control1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -307,7 +307,7 @@
 
                         <TextView
                             android:id="@+id/track1"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:textAlignment="center"
@@ -319,7 +319,7 @@
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/control2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -329,7 +329,7 @@
 
                         <TextView
                             android:id="@+id/track2"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:textAlignment="center"
@@ -341,7 +341,7 @@
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/control3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -351,7 +351,7 @@
 
                         <TextView
                             android:id="@+id/track3"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:textAlignment="center"
@@ -363,7 +363,7 @@
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/control4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -373,7 +373,7 @@
 
                         <TextView
                             android:id="@+id/track4"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:textAlignment="center"
@@ -385,7 +385,7 @@
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/control5"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -395,7 +395,7 @@
 
                         <TextView
                             android:id="@+id/allTracks"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:textAlignment="center"
@@ -569,6 +569,12 @@
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/mixerTest"-->
+        <!--android:text="HELLO"/>-->
 
     <!--FLOATING BUTTON FOR SETTINGS AND METRONOME-->
     <com.getbase.floatingactionbutton.FloatingActionsMenu
