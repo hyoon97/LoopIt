@@ -4,17 +4,14 @@ import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Handler;
-import android.widget.TextView;
 
-public class Metronome implements Runnable{
+public class Metronome{
 
     private int bpm;
     private SoundPool soundPool;
     private int maxStreams = 4;
     private int met_sound;
     private Handler handler;
-    private boolean running;
-    private MainActivity mainActivity = new MainActivity();
     private Context mainConext;
     private int[] notes;
     private int note;
@@ -84,12 +81,21 @@ public class Metronome implements Runnable{
         met_sound = notes[note];
     }
 
-    @Override
-    public void run() {
-        int delay = 60000/bpm;
-        soundPool.play(met_sound,(float)0.3,(float)0.3,0,0,1);
-        handler.postDelayed(this, delay);
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            int delay = 60000/bpm;
+            soundPool.play(met_sound,(float)0.3,(float)0.3,0,0,1);
+            handler.postDelayed(this, delay);
+        }
+    };
 
+    public void start(){
+        runnable.run();
+    }
+
+    public void stop(){
+        handler.removeCallbacks(runnable);
     }
 
 

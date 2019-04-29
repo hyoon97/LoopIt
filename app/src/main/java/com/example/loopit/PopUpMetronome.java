@@ -6,41 +6,31 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.webkit.ServiceWorkerClient;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 
 public class PopUpMetronome extends Activity {
-    private Metronome metronome;
-    private int initBpm = 100;
+
     private Button bpmDecButton;
     private Button bpmIncButton;
     private TextView bpmTextView;
     private Switch metronomeSwitch;
-    private boolean metronomeSwitchState;
-    private boolean metIsPlaying = false;
 
     private Button decBeatsButton;
     private Button incBeatsButton;
     private TextView beatsTextView;
-    private int beats = 1;
     private Switch beatsSwitch;
-    private boolean beatsToggle = false;
 
     private Button decCountdownButton;
     private Button incCountdownButton;
     private TextView countdownTextView;
-    private int countdown = 0;
     private Switch countdownSwitch;
-    private boolean countdownToggle = false;
 
     private Button decDurationButton;
     private Button incDurationButton;
     private TextView durationTextView;
-    private int duration = 0;
     private Switch durationSwitch;
-    private boolean durationToggle = false;
 
     private int currentNote = 0;
 
@@ -70,7 +60,7 @@ public class PopUpMetronome extends Activity {
 
 
     private void initMetronome(){
-        metronome = new Metronome(initBpm, this);
+
         bpmIncButton = (Button) findViewById(R.id.inc_bpm_button);
         bpmDecButton = (Button) findViewById(R.id.dec_bpm_button);
         bpmTextView = (TextView) findViewById(R.id.bpm_textView);
@@ -79,16 +69,16 @@ public class PopUpMetronome extends Activity {
         bpmIncButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                metronome.incBpm(5);
-                bpmTextView.setText("" + metronome.getBpm());
+                MainActivity.metronome.incBpm(5);
+                bpmTextView.setText("" + MainActivity.metronome.getBpm());
             }
         });
 
         bpmDecButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                metronome.decBpm(5);
-                bpmTextView.setText("" + metronome.getBpm());
+                MainActivity.metronome.decBpm(5);
+                bpmTextView.setText("" + MainActivity.metronome.getBpm());
             }
         });
 
@@ -96,21 +86,25 @@ public class PopUpMetronome extends Activity {
             @Override
             public void onClick(View v) {
                 if(metronomeSwitch.isChecked()){
-                    if(!metIsPlaying){
-                        metronome.run();
+                    if(!MainActivity.metIsPlaying){
+                        MainActivity.metronome.start();
+                        MainActivity.metIsPlaying = true;
                     }
                 } else {
-                    metronome.getHandler().removeCallbacks(metronome);
-                    metIsPlaying = false;
+                    MainActivity.metronome.stop();
+                    MainActivity.metIsPlaying = false;
                     durationSwitch.setChecked(false);
                     countdownSwitch.setChecked(false);
                     beatsSwitch.setChecked(false);
-                    durationToggle = false;
-                    countdownToggle = false;
-                    beatsToggle = false;
+                    MainActivity.durationMode = false;
+                    MainActivity.countdownMode = false;
+                    MainActivity.beatsMode = false;
                 }
             }
         });
+
+        metronomeSwitch.setChecked(MainActivity.metIsPlaying);
+        bpmTextView.setText("" + MainActivity.metronome.getBpm());
     }
 
     private void initBeats() {
@@ -122,9 +116,9 @@ public class PopUpMetronome extends Activity {
         decBeatsButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(beats > 1) {
-                    beats--;
-                    beatsTextView.setText("" + beats);
+                if(MainActivity.beats > 1) {
+                    MainActivity.beats--;
+                    beatsTextView.setText("" + MainActivity.beats);
                 }
             }
         });
@@ -132,8 +126,8 @@ public class PopUpMetronome extends Activity {
         incBeatsButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                beats++;
-                beatsTextView.setText(""  + beats);
+                MainActivity.beats++;
+                beatsTextView.setText(""  + MainActivity.beats);
             }
         });
 
@@ -141,12 +135,15 @@ public class PopUpMetronome extends Activity {
             @Override
             public void onClick(View v) {
                 if (beatsSwitch.isChecked()){
-                    beatsToggle = true;
+                    MainActivity.beatsMode = true;
                 } else {
-                    beatsToggle = false;
+                    MainActivity.beatsMode = false;
                 }
             }
         });
+
+        beatsSwitch.setChecked(MainActivity.beatsMode);
+        beatsTextView.setText("" + MainActivity.beats);
     }
 
     private void initCountdown() {
@@ -158,9 +155,9 @@ public class PopUpMetronome extends Activity {
         decCountdownButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(countdown > 1) {
-                    countdown--;
-                    countdownTextView.setText("" + countdown);
+                if(MainActivity.countdown > 1) {
+                    MainActivity.countdown--;
+                    countdownTextView.setText("" + MainActivity.countdown);
                 }
             }
         });
@@ -168,8 +165,8 @@ public class PopUpMetronome extends Activity {
         incCountdownButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                countdown++;
-                countdownTextView.setText("" + countdown);
+                MainActivity.countdown++;
+                countdownTextView.setText("" + MainActivity.countdown);
             }
         });
 
@@ -177,12 +174,15 @@ public class PopUpMetronome extends Activity {
             @Override
             public void onClick(View v) {
                 if(countdownSwitch.isChecked()){
-                    countdownToggle = true;
+                    MainActivity.countdownMode = true;
                 } else {
-                    countdownToggle = false;
+                    MainActivity.countdownMode = false;
                 }
             }
         });
+
+        countdownSwitch.setChecked(MainActivity.countdownMode);
+        countdownTextView.setText("" + MainActivity.countdown);
 
     }
 
@@ -195,9 +195,9 @@ public class PopUpMetronome extends Activity {
         decDurationButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (duration > 1) {
-                    duration--;
-                    durationTextView.setText("" + duration);
+                if (MainActivity.duration > 1) {
+                    MainActivity.duration--;
+                    durationTextView.setText("" + MainActivity.duration);
                 }
             }
         });
@@ -205,8 +205,8 @@ public class PopUpMetronome extends Activity {
         incDurationButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                duration++;
-                durationTextView.setText("" + duration);
+                MainActivity.duration++;
+                durationTextView.setText("" + MainActivity.duration);
             }
         });
 
@@ -214,12 +214,15 @@ public class PopUpMetronome extends Activity {
             @Override
             public void onClick(View v) {
                 if (durationSwitch.isChecked()) {
-                    durationToggle = true;
+                    MainActivity.durationMode = true;
                 } else {
-                    durationToggle = false;
+                    MainActivity.durationMode = false;
                 }
             }
         });
+
+        durationSwitch.setChecked(MainActivity.durationMode);
+        durationTextView.setText("" + MainActivity.duration);
 
     }
     @Override
@@ -245,4 +248,7 @@ public class PopUpMetronome extends Activity {
 
         initPitches();
     }
+
+
+
 }

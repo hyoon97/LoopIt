@@ -35,6 +35,16 @@ public class MainActivity extends AppCompatActivity {
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {android.Manifest.permission.RECORD_AUDIO};
 
+    public static Metronome metronome;
+    public static boolean metIsPlaying = false;
+    public static int initBpm = 100;
+    public static int beats = 1;
+    public static boolean beatsMode = false;
+    public static int countdown = 0;
+    public static boolean countdownMode = false;
+    public static int duration = 0;
+    public static boolean durationMode = false;
+
     //UI Variables
     CardView card1;
     CardView card2;
@@ -929,6 +939,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        metronome = new Metronome(initBpm, this);
 
         Toast toast = Toast.makeText(MainActivity.this, "Please use earphones for the best experience.", Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
