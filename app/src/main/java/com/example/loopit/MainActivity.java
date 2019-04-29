@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public static int duration = 0;
     public static boolean durationMode = false;
     public static boolean metronomeNoteSound = false;
+    public static int lastMode = 1;
 
     //UI Variables
     CardView card1;
@@ -71,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
     CardView clearButton;
     CardView overdubButton;
     CardView playButton;
-
-    int trackControlNum;
+    CardView toneButton;
+    CardView pitchButton;
 
     //Recorder and Player Variables
     private boolean isLoop = true;
@@ -97,14 +98,7 @@ public class MainActivity extends AppCompatActivity {
     private Overdub overdub3;
     private Overdub overdub4;
 
-    private PlaybackParams params1;
-
     private static int time = 0;
-
-    private int currentPosition1 = 0;
-    private int currentPosition2 = 0;
-    private int currentPosition3 = 0;
-    private int currentPosition4 = 0;
 
     private boolean isFirst;
 
@@ -158,11 +152,117 @@ public class MainActivity extends AppCompatActivity {
 
     private Handler mHandler = new Handler();
 
+    int trackControlNum = 0;
 
-    private boolean track1Selected = false;
-    private boolean track2Selected = false;
-    private boolean track3Selected = false;
-    private boolean track4Selected = false;
+    private void initCards(){
+        card1 = (CardView) this.findViewById(R.id.cardOne);
+        card2 = (CardView) this.findViewById(R.id.cardTwo);
+        card3 = (CardView) this.findViewById(R.id.cardThree);
+        card4 = (CardView) this.findViewById(R.id.cardFour);
+
+        cardImage1 = (ImageView) this.findViewById(R.id.cardImage1);
+        cardImage2 = (ImageView) this.findViewById(R.id.cardImage2);
+        cardImage3 = (ImageView) this.findViewById(R.id.cardImage3);
+        cardImage4 = (ImageView) this.findViewById(R.id.cardImage4);
+
+        micResId = getResources().getIdentifier("mic", "drawable","com.example.loopit");
+        recordResId = getResources().getIdentifier("record", "drawable","com.example.loopit");
+        pauseResId = getResources().getIdentifier("pause", "drawable","com.example.loopit");
+        playResId = getResources().getIdentifier("play", "drawable","com.example.loopit");
+
+        cardImage1.setImageResource(micResId);
+        cardImage2.setImageResource(micResId);
+        cardImage3.setImageResource(micResId);
+        cardImage4.setImageResource(micResId);
+
+        cardImage1.setVisibility(View.VISIBLE);
+        cardImage2.setVisibility(View.VISIBLE);
+        cardImage3.setVisibility(View.VISIBLE);
+        cardImage4.setVisibility(View.VISIBLE);
+
+        trackControl1 = (CardView) this.findViewById(R.id.control1);
+        trackControl1.setCardBackgroundColor(Color.parseColor("#bababa"));
+
+        trackControl2 = (CardView) this.findViewById(R.id.control2);
+        trackControl2.setCardBackgroundColor(Color.parseColor("#bababa"));
+
+        trackControl3 = (CardView) this.findViewById(R.id.control3);
+        trackControl3.setCardBackgroundColor(Color.parseColor("#bababa"));
+
+        trackControl4 = (CardView) this.findViewById(R.id.control4);
+        trackControl4.setCardBackgroundColor(Color.parseColor("#bababa"));
+
+        allTracks = (CardView) this.findViewById(R.id.control5);
+        allTracks.setCardBackgroundColor(Color.parseColor("#bababa"));
+
+        clearButton = (CardView) this.findViewById(R.id.clearTrack);
+
+        overdubButton = (CardView) this.findViewById(R.id.overdub);
+        overdubButton.setCardBackgroundColor(Color.parseColor("#bababa"));
+
+        playButton = (CardView) this.findViewById(R.id.playAll);
+        playButton.setCardBackgroundColor(Color.parseColor("#bababa"));
+
+        toneButton = (CardView) this.findViewById(R.id.tone);
+        toneButton.setCardBackgroundColor(Color.parseColor("#bababa"));
+
+        pitchButton = (CardView) this.findViewById(R.id.pitch);
+        pitchButton.setCardBackgroundColor(Color.parseColor("#bababa"));
+    }
+
+    private void initFloatingButtons() {
+        com.getbase.floatingactionbutton.FloatingActionButton fabMetronome = findViewById(R.id.fabMetronome);
+        com.getbase.floatingactionbutton.FloatingActionButton fabSettings = findViewById(R.id.fabSettings);
+
+        fabMetronome.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PopUpMetronome.class));
+            }
+        });
+
+        fabSettings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PopUpSettings.class));
+            }
+        });
+    }
+
+    private void initLabels () {
+        cardImage1.setContentDescription("Record / Pause / Play");
+        cardImage2.setContentDescription("Record / Pause / Play");
+        cardImage3.setContentDescription("Record / Pause / Play");
+        cardImage4.setContentDescription("Record / Pause / Play");
+
+        TextView controlPanel = (TextView) findViewById(R.id.controlPanel);
+        TextView operations = (TextView) findViewById(R.id.operations);
+        TextView track1 = (TextView) findViewById(R.id.track1);
+        TextView track2 = (TextView) findViewById(R.id.track2);
+        TextView track3 = (TextView) findViewById(R.id.track3);
+        TextView track4 = (TextView) findViewById(R.id.track4);
+        TextView clearText = (TextView) findViewById(R.id.clearText);
+        TextView overdubText = (TextView) findViewById(R.id.overdubText);
+        TextView toneText = (TextView) findViewById(R.id.toneText);
+        TextView pitchText = (TextView) findViewById(R.id.pitchText);
+
+        TextView allTracks = (TextView) findViewById(R.id.allTracks);
+        TextView playTracks = (TextView) findViewById(R.id.playAllText);
+
+        controlPanel.setText("Control Panel");
+        operations.setText("Operations");
+
+        track1.setText("Track 1");
+        track2.setText("Track 2");
+        track3.setText("Track 3");
+        track4.setText("Track 4");
+
+        allTracks.setText("All");
+        playTracks.setText("Play");
+
+        clearText.setText("Clear");
+        overdubText.setText("Over-Dub");
+        toneText.setText("Tone");
+        pitchText.setText("Pitch");
+    }
 
     private void initProgressBar(){
         progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
@@ -323,90 +423,6 @@ public class MainActivity extends AppCompatActivity {
         progress4 = 0;
     }
 
-    private void disableTrackButtons(int currentTrack){
-        if (currentTrack == 1){
-            card2.setEnabled(false);
-            card3.setEnabled(false);
-            card4.setEnabled(false);
-
-            card2.setCardBackgroundColor(Color.parseColor("#bababa"));
-            card3.setCardBackgroundColor(Color.parseColor("#bababa"));
-            card4.setCardBackgroundColor(Color.parseColor("#bababa"));
-        }
-
-        if (currentTrack == 2){
-            card1.setEnabled(false);
-            card3.setEnabled(false);
-            card4.setEnabled(false);
-
-            card1.setCardBackgroundColor(Color.parseColor("#bababa"));
-            card3.setCardBackgroundColor(Color.parseColor("#bababa"));
-            card4.setCardBackgroundColor(Color.parseColor("#bababa"));
-        }
-
-        if (currentTrack == 3){
-            card1.setEnabled(false);
-            card2.setEnabled(false);
-            card4.setEnabled(false);
-
-            card1.setCardBackgroundColor(Color.parseColor("#bababa"));
-            card2.setCardBackgroundColor(Color.parseColor("#bababa"));
-            card4.setCardBackgroundColor(Color.parseColor("#bababa"));
-        }
-
-        if (currentTrack == 4){
-            card2.setEnabled(false);
-            card3.setEnabled(false);
-            card1.setEnabled(false);
-
-            card2.setCardBackgroundColor(Color.parseColor("#bababa"));
-            card3.setCardBackgroundColor(Color.parseColor("#bababa"));
-            card1.setCardBackgroundColor(Color.parseColor("#bababa"));
-        }
-    }
-
-    private void enableTrackButtons(int currentTrack){
-        if (currentTrack == 1){
-            card2.setEnabled(true);
-            card3.setEnabled(true);
-            card4.setEnabled(true);
-
-            card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
-            card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
-            card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
-        }
-
-        if (currentTrack == 2){
-            card1.setEnabled(true);
-            card3.setEnabled(true);
-            card4.setEnabled(true);
-
-            card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
-            card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
-            card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
-        }
-
-        if (currentTrack == 3){
-            card1.setEnabled(true);
-            card2.setEnabled(true);
-            card4.setEnabled(true);
-
-            card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
-            card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
-            card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
-        }
-
-        if (currentTrack == 4){
-            card2.setEnabled(true);
-            card3.setEnabled(true);
-            card1.setEnabled(true);
-
-            card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
-            card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
-            card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
-        }
-    }
-
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
@@ -417,59 +433,243 @@ public class MainActivity extends AppCompatActivity {
         if (!permissionToRecordAccepted ) finish();
     }
 
-    private void initCards(){
-        card1 = (CardView) this.findViewById(R.id.cardOne);
-        card2 = (CardView) this.findViewById(R.id.cardTwo);
-        card3 = (CardView) this.findViewById(R.id.cardThree);
-        card4 = (CardView) this.findViewById(R.id.cardFour);
+    private void buttonBlock(int currentButton) {
 
-        cardImage1 = (ImageView) this.findViewById(R.id.cardImage1);
-        cardImage2 = (ImageView) this.findViewById(R.id.cardImage2);
-        cardImage3 = (ImageView) this.findViewById(R.id.cardImage3);
-        cardImage4 = (ImageView) this.findViewById(R.id.cardImage4);
+        //clearButton.setEnabled(false);
+        clearButton.setCardBackgroundColor(Color.parseColor("#bababa"));
+        //overdubButton.setEnabled(false);
+        overdubButton.setCardBackgroundColor(Color.parseColor("#bababa"));
+        //playButton.setEnabled(false);
+        playButton.setCardBackgroundColor(Color.parseColor("#bababa"));
+        //allTracks.setEnabled(false);
+        allTracks.setCardBackgroundColor(Color.parseColor("#bababa"));
 
-        micResId = getResources().getIdentifier("mic", "drawable","com.example.loopit");
-        recordResId = getResources().getIdentifier("record", "drawable","com.example.loopit");
-        pauseResId = getResources().getIdentifier("pause", "drawable","com.example.loopit");
-        playResId = getResources().getIdentifier("play", "drawable","com.example.loopit");
+        trackControl1.setCardBackgroundColor(Color.parseColor("#bababa"));
+        //trackControl1.setEnabled(false);
 
-        cardImage1.setImageResource(micResId);
-        cardImage2.setImageResource(micResId);
-        cardImage3.setImageResource(micResId);
-        cardImage4.setImageResource(micResId);
+        trackControl2.setCardBackgroundColor(Color.parseColor("#bababa"));
+        //trackControl2.setEnabled(false);
 
-        cardImage1.setVisibility(View.VISIBLE);
-        cardImage2.setVisibility(View.VISIBLE);
-        cardImage3.setVisibility(View.VISIBLE);
-        cardImage4.setVisibility(View.VISIBLE);
+        trackControl3.setCardBackgroundColor(Color.parseColor("#bababa"));
+        //trackControl3.setEnabled(false);
 
-        trackControl1 = (CardView) this.findViewById(R.id.control1);
-        trackControl2 = (CardView) this.findViewById(R.id.control2);
-        trackControl3 = (CardView) this.findViewById(R.id.control3);
-        trackControl4 = (CardView) this.findViewById(R.id.control4);
+        trackControl4.setCardBackgroundColor(Color.parseColor("#bababa"));
+        //trackControl4.setEnabled(false);
 
-        allTracks = (CardView) this.findViewById(R.id.control5);
+        switch (currentButton){
+            case 1:
+                card2.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card2.setEnabled(false);
+                card3.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card3.setEnabled(false);
+                card4.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card4.setEnabled(false);
+                break;
 
-        clearButton = (CardView) this.findViewById(R.id.clearTrack);
-        overdubButton = (CardView) this.findViewById(R.id.overdub);
-        playButton = (CardView) this.findViewById(R.id.playAll);
+            case 2:
+                card1.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card1.setEnabled(false);
+                card3.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card3.setEnabled(false);
+                card4.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card4.setEnabled(false);
+                break;
+
+            case 3:
+                card2.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card2.setEnabled(false);
+                card1.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card1.setEnabled(false);
+                card4.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card4.setEnabled(false);
+                break;
+
+            case 4:
+                card2.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card2.setEnabled(false);
+                card3.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card3.setEnabled(false);
+                card1.setCardBackgroundColor(Color.parseColor("#bababa"));
+                //card1.setEnabled(false);
+                break;
+
+            default:
+                break;
+        }
     }
 
-    private void initFloatingButtons() {
-        com.getbase.floatingactionbutton.FloatingActionButton fabMetronome = findViewById(R.id.fabMetronome);
-        com.getbase.floatingactionbutton.FloatingActionButton fabSettings = findViewById(R.id.fabSettings);
+    public void buttonUnblock(int currentButton) {
+        //playButton.setEnabled(true);
+        //playButton.setCardBackgroundColor(Color.parseColor("#ffffff"));
 
-        fabMetronome.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PopUpMetronome.class));
-            }
-        });
+        clearButton.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        //clearButton.setEnabled(true);
 
-        fabSettings.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PopUpSettings.class));
+        if (isRecorded1 || isRecorded2 || isRecorded3 || isRecorded4){
+            overdubButton.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            //overdubButton.setEnabled(true);
+        }
+
+        if (isRecorded1 && isRecorded2 && isRecorded3 && isRecorded4){
+            allTracks.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            //allTracks.setEnabled(true);
+        }
+
+        if (isRecorded1){
+            //trackControl1.setEnabled(true);
+            trackControl1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        }
+
+        if (isRecorded2){
+            //trackControl2.setEnabled(true);
+            trackControl2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        }
+
+        if (isRecorded3){
+            //trackControl3.setEnabled(true);
+            trackControl3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        }
+
+        if (isRecorded4){
+            //trackControl4.setEnabled(true);
+            trackControl4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        }
+
+        switch (currentButton){
+            case 1:
+                card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card2.setEnabled(true);
+                card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card3.setEnabled(true);
+                card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card4.setEnabled(true);
+                break;
+
+            case 2:
+                card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card1.setEnabled(true);
+                card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card3.setEnabled(true);
+                card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card4.setEnabled(true);
+                break;
+
+            case 3:
+                card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card2.setEnabled(true);
+                card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card1.setEnabled(true);
+                card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card4.setEnabled(true);
+                break;
+
+            case 4:
+                card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card2.setEnabled(true);
+                card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card3.setEnabled(true);
+                card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                //card1.setEnabled(true);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void trackSelection(int currentTrack){
+        if (currentTrack == 1){
+            if (isRecorded1){
+                card1.setCardBackgroundColor(Color.parseColor("#92caf4"));
+                card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
             }
-        });
+        }
+
+        if (currentTrack == 2){
+            if (isRecorded2){
+                card2.setCardBackgroundColor(Color.parseColor("#92caf4"));
+                card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+
+            }
+        }
+
+        if (currentTrack == 3){
+            if (isRecorded3){
+                card3.setCardBackgroundColor(Color.parseColor("#92caf4"));
+                card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            }
+        }
+
+        if (currentTrack == 4){
+            if (isRecorded4){
+                card4.setCardBackgroundColor(Color.parseColor("#92caf4"));
+                card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            }
+        }
+
+        if (currentTrack == 5){
+
+            if (isRecorded1){
+                card1.setCardBackgroundColor(Color.parseColor("#92caf4"));
+            }
+
+            if (isRecorded2){
+                card2.setCardBackgroundColor(Color.parseColor("#92caf4"));
+            }
+
+            if (isRecorded3){
+                card3.setCardBackgroundColor(Color.parseColor("#92caf4"));
+            }
+
+            if (isRecorded4){
+                card4.setCardBackgroundColor(Color.parseColor("#92caf4"));
+            }
+
+            if (isRecorded1 && isRecorded2 && isRecorded3 && isRecorded4){
+                playButton.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            }
+        }
+    }
+
+    public void trackDeselection(int currentTrack){
+        switch(currentTrack){
+            case 1:
+                card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                trackControl1.setCardBackgroundColor(Color.parseColor("#bababa"));
+                break;
+
+            case 2:
+                card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                trackControl2.setCardBackgroundColor(Color.parseColor("#bababa"));
+                break;
+
+            case 3:
+                card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                trackControl3.setCardBackgroundColor(Color.parseColor("#bababa"));
+                break;
+
+            case 4:
+                card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                trackControl4.setCardBackgroundColor(Color.parseColor("#bababa"));
+                break;
+
+            case 5:
+                card1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                card4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+
+            default:
+                break;
+        }
     }
 
     public void start_record1(){
@@ -480,6 +680,7 @@ public class MainActivity extends AppCompatActivity {
             track1.add(trackName1);
             trackNum1 += 1;
             recorder1.start();
+            buttonBlock(1);
         }
         else{
             trackName1 = getExternalCacheDir().getAbsolutePath();
@@ -488,19 +689,21 @@ public class MainActivity extends AppCompatActivity {
             track1.add(trackName1);
             trackNum1 += 1;
             recorder1.start();
+            buttonBlock(1);
             stopNonFirstRecord = new Timer();
             stopNonFirstRecord.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     recorder1.stop();
-//                    player1.play();
                     play1();
                     isPlaying1 = true;
                     isRecorded1 = true;
                     isRecording1 = false;
                     cardImage1.setImageResource(pauseResId);
+                    buttonUnblock(1);
                 }
             }, time+220);
+
         }
     }
 
@@ -610,6 +813,7 @@ public class MainActivity extends AppCompatActivity {
             track2.add(trackName2);
             trackNum2 += 1;
             recorder2.start();
+            buttonBlock(2);
         }
         else{
             trackName2 = getExternalCacheDir().getAbsolutePath();
@@ -618,17 +822,20 @@ public class MainActivity extends AppCompatActivity {
             track2.add(trackName2);
             trackNum2 += 1;
             recorder2.start();
+            buttonBlock(2);
             stopNonFirstRecord = new Timer();
             stopNonFirstRecord.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     recorder2.stop();
+
 //                    player2.play();
                     play2();
                     isPlaying2 = true;
                     isRecorded2 = true;
                     isRecording2 = false;
                     cardImage2.setImageResource(pauseResId);
+                    buttonUnblock(2);
                 }
             }, time+220);
         }
@@ -637,6 +844,7 @@ public class MainActivity extends AppCompatActivity {
     public void stop_record2(){
         recorder2.stop();
         player2.play();
+
         time = player2.getDuration();
         loop = new Timer();
         loop.schedule(new TimerTask() {
@@ -709,6 +917,7 @@ public class MainActivity extends AppCompatActivity {
             track3.add(trackName3);
             trackNum3 += 1;
             recorder3.start();
+            buttonBlock(3);
         }
         else{
             trackName3 = getExternalCacheDir().getAbsolutePath();
@@ -717,17 +926,20 @@ public class MainActivity extends AppCompatActivity {
             track3.add(trackName3);
             trackNum3 += 1;
             recorder3.start();
+            buttonBlock(3);
             stopNonFirstRecord = new Timer();
             stopNonFirstRecord.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     recorder3.stop();
+
 //                    player3.play();
                     play3();
                     isPlaying3 = true;
                     isRecorded3 = true;
                     isRecording3 = false;
                     cardImage3.setImageResource(pauseResId);
+                    buttonUnblock(3);
                 }
             }, time+220);
         }
@@ -808,6 +1020,7 @@ public class MainActivity extends AppCompatActivity {
             track4.add(trackName4);
             trackNum4 += 1;
             recorder4.start();
+            buttonBlock(4);
         }
         else{
             trackName4 = getExternalCacheDir().getAbsolutePath();
@@ -816,17 +1029,20 @@ public class MainActivity extends AppCompatActivity {
             recorder4 = new Recorder(trackName4);
             trackNum4 += 1;
             recorder4.start();
+            buttonBlock(4);
             stopNonFirstRecord = new Timer();
             stopNonFirstRecord.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     recorder4.stop();
+
 //                    player4.play();
                     play4();
                     isPlaying4 = true;
                     isRecorded4 = true;
                     isRecording4 = false;
                     cardImage4.setImageResource(pauseResId);
+                    buttonUnblock(4);
                 }
             }, time+220);
         }
@@ -899,43 +1115,6 @@ public class MainActivity extends AppCompatActivity {
         overdubPlayer4.stop();
     }
 
-    private void initLabels () {
-        cardImage1.setContentDescription("Record / Pause / Play");
-        cardImage2.setContentDescription("Record / Pause / Play");
-        cardImage3.setContentDescription("Record / Pause / Play");
-        cardImage4.setContentDescription("Record / Pause / Play");
-
-        TextView controlPanel = (TextView) findViewById(R.id.controlPanel);
-        TextView operations = (TextView) findViewById(R.id.operations);
-        TextView track1 = (TextView) findViewById(R.id.track1);
-        TextView track2 = (TextView) findViewById(R.id.track2);
-        TextView track3 = (TextView) findViewById(R.id.track3);
-        TextView track4 = (TextView) findViewById(R.id.track4);
-        TextView clearText = (TextView) findViewById(R.id.clearText);
-        TextView overdubText = (TextView) findViewById(R.id.overdubText);
-        TextView toneText = (TextView) findViewById(R.id.toneText);
-        TextView pitchText = (TextView) findViewById(R.id.pitchText);
-
-        TextView allTracks = (TextView) findViewById(R.id.allTracks);
-        TextView playTracks = (TextView) findViewById(R.id.playAllText);
-
-        controlPanel.setText("Control Panel");
-        operations.setText("Operations");
-
-        track1.setText("Track 1");
-        track2.setText("Track 2");
-        track3.setText("Track 3");
-        track4.setText("Track 4");
-
-        allTracks.setText("All");
-        playTracks.setText("Play");
-
-        clearText.setText("Clear");
-        overdubText.setText("Over-Dub");
-        toneText.setText("Tone");
-        pitchText.setText("Pitch");
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -950,7 +1129,6 @@ public class MainActivity extends AppCompatActivity {
         initCards();
         initFloatingButtons();
         initLabels();
-
         initProgressBar();
 
         isFirst = true;
@@ -971,34 +1149,28 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
             if(!isRecording1 && !isRecorded1 && !isPlaying1){
                 start_record1();
-//                disableTrackButtons(1);
                 isRecording1 = true;
                 cardImage1.setImageResource(recordResId);
             }
 
             else if(isFirst && isRecording1 && !isRecorded1 && !isPlaying1){
                 stop_record1();
-                startProgressBar1();
-//                enableTrackButtons(1);
                 isFirst = false;
                 isPlaying1 = true;
                 isRecorded1 = true;
                 isRecording1 = false;
+                buttonUnblock(1);
                 cardImage1.setImageResource(pauseResId);
             }
 
             else if(!isFirst && !isRecording1 && isRecorded1 && isPlaying1){
                 stop1();
-                resetProgressBar1();
-//                enableTrackButtons(1);
                 isPlaying1 = false;
                 cardImage1.setImageResource(playResId);
             }
 
             else if(!isFirst && !isRecording1 && isRecorded1 && !isPlaying1){
                 play1();
-//                enableTrackButtons(1);
-                startProgressBar1();
                 isPlaying1 = true;
                 cardImage1.setImageResource(pauseResId);
             }
@@ -1009,31 +1181,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
             if(!isRecording2 && !isRecorded2 && !isPlaying2){
                 start_record2();
-//                disableTrackButtons(2);
                 isRecording2 = true;
                 cardImage2.setImageResource(recordResId);
             }
             else if(isFirst && isRecording2 && !isRecorded2 && !isPlaying2){
                 stop_record2();
-                startProgressBar2();
-//                enableTrackButtons(2);
                 isFirst = false;
                 isPlaying2 = true;
                 isRecorded2 = true;
                 isRecording2 = false;
+                buttonUnblock(2);
                 cardImage2.setImageResource(pauseResId);
             }
             else if(!isFirst && !isRecording2 && isRecorded2 && isPlaying2){
                 stop2();
-                resetProgressBar2();
-//                enableTrackButtons(2);
                 isPlaying2 = false;
                 cardImage2.setImageResource(playResId);
             }
             else if(!isFirst && !isRecording2 && isRecorded2 && !isPlaying2){
                 play2();
-                startProgressBar2();
-//                enableTrackButtons(2);
                 isPlaying2 = true;
                 cardImage2.setImageResource(pauseResId);
             }
@@ -1044,31 +1210,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
             if(!isRecording3 && !isRecorded3 && !isPlaying3){
                 start_record3();
-//                disableTrackButtons(3);
                 isRecording3 = true;
                 cardImage3.setImageResource(recordResId);
             }
             else if(isFirst && isRecording3 && !isRecorded3 && !isPlaying3){
                 stop_record3();
-                startProgressBar3();
-//                enableTrackButtons(3);
                 isFirst = false;
                 isPlaying3 = true;
                 isRecorded3 = true;
                 isRecording3 = false;
+                buttonUnblock(3);
                 cardImage3.setImageResource(pauseResId);
             }
             else if(!isFirst &&!isRecording3 && isRecorded3 && isPlaying3){
                 stop3();
-                resetProgressBar3();
-//                enableTrackButtons(3);
                 isPlaying3 = false;
                 cardImage3.setImageResource(playResId);
             }
             else if(!isFirst &&!isRecording3 && isRecorded3 && !isPlaying3){
                 play3();
-                startProgressBar3();
-//                enableTrackButtons(3);
                 isPlaying3 = true;
                 cardImage3.setImageResource(pauseResId);
             }
@@ -1079,31 +1239,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
             if(!isRecording4 && !isRecorded4 && !isPlaying4){
                 start_record4();
-//                disableTrackButtons(4);
                 isRecording4 = true;
                 cardImage4.setImageResource(recordResId);
             }
             else if(isFirst && isRecording4 && !isRecorded4 && !isPlaying4){
                 stop_record4();
-                startProgressBar4();
-//                enableTrackButtons(4);
                 isFirst = false;
                 isPlaying4 = true;
                 isRecorded4 = true;
                 isRecording4 = false;
+                buttonUnblock(4);
                 cardImage4.setImageResource(pauseResId);
             }
             else if(!isFirst && !isRecording4 && isRecorded4 && isPlaying4){
                 stop4();
-                resetProgressBar4();
-//                enableTrackButtons(4);
                 isPlaying4 = false;
                 cardImage4.setImageResource(playResId);
             }
             else if(!isFirst && !isRecording4 && isRecorded4 && !isPlaying4){
                 play4();
-                startProgressBar4();
-//                enableTrackButtons(4);
                 isPlaying4 = true;
                 cardImage4.setImageResource(pauseResId);
             }
@@ -1114,13 +1268,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 trackControlNum = 1;
-//                track1Selected = !track1Selected;
-//                if (track1Selected){
-//                    trackControl1.setCardBackgroundColor(Color.parseColor("#bababa"));
-//                }
-//                else{
-//                    trackControl1.setCardBackgroundColor(Color.parseColor("#ffffff"));
-//                }
+                trackSelection(trackControlNum);
             }
         });
 
@@ -1128,6 +1276,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 trackControlNum = 2;
+                trackSelection(trackControlNum);
             }
         });
 
@@ -1135,6 +1284,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 trackControlNum = 3;
+                trackSelection(trackControlNum);
             }
         });
 
@@ -1142,6 +1292,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 trackControlNum = 4;
+                trackSelection(trackControlNum);
             }
         });
 
@@ -1149,6 +1300,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 trackControlNum = 5;
+                trackSelection(trackControlNum);
+                trackSelection(trackControlNum);
+
             }
         });
 
@@ -1158,12 +1312,14 @@ public class MainActivity extends AppCompatActivity {
                 switch (trackControlNum){
                     case 1:
                         player1.stop();
+
                         trackNum1 = 0;
                         isRecording1 = false;
                         isRecorded1 = false;
                         isPlaying1 = false;
+                        trackDeselection(1);
                         cardImage1.setImageResource(micResId);
-                        resetProgressBar1();
+                        //resetProgressBar1();
                         if(!isRecorded2 && !isRecorded3 && !isRecorded4){
                             isFirst = true;
                         }
@@ -1171,12 +1327,14 @@ public class MainActivity extends AppCompatActivity {
 
                     case 2:
                         player2.stop();
+
                         trackNum2 = 0;
                         isRecording2 = false;
                         isRecorded2 = false;
                         isPlaying2 = false;
+                        trackDeselection(2);
                         cardImage2.setImageResource(micResId);
-                        resetProgressBar2();
+                        //resetProgressBar2();
                         if(!isRecorded1 && !isRecorded3 && !isRecorded4){
                             isFirst = true;
                         }
@@ -1184,12 +1342,14 @@ public class MainActivity extends AppCompatActivity {
 
                     case 3:
                         player3.stop();
+
                         trackNum3 = 0;
                         isRecording3 = false;
                         isRecorded3 = false;
                         isPlaying3 = false;
+                        trackDeselection(3);
                         cardImage3.setImageResource(micResId);
-                        resetProgressBar3();
+                        //resetProgressBar3();
                         if(!isRecorded1 && !isRecorded2 && !isRecorded4){
                             isFirst = true;
                         }
@@ -1197,12 +1357,14 @@ public class MainActivity extends AppCompatActivity {
 
                     case 4:
                         player4.stop();
+
                         trackNum4 = 0;
                         isRecording4 = false;
                         isRecorded4 = false;
                         isPlaying4 = false;
+                        trackDeselection(4);
                         cardImage4.setImageResource(micResId);
-                        resetProgressBar4();
+                        //resetProgressBar4();
                         if(!isRecorded1 && !isRecorded2 && !isRecorded3){
                             isFirst = true;
                         }
@@ -1213,6 +1375,9 @@ public class MainActivity extends AppCompatActivity {
                         player2.stop();
                         player3.stop();
                         player4.stop();
+
+                        initCards();
+
                         trackNum1 = 0;
                         trackNum2 = 0;
                         trackNum3 = 0;
@@ -1229,14 +1394,11 @@ public class MainActivity extends AppCompatActivity {
                         isPlaying2 = false;
                         isPlaying3 = false;
                         isPlaying4 = false;
+                        trackDeselection(5);
                         cardImage1.setImageResource(micResId);
                         cardImage2.setImageResource(micResId);
                         cardImage3.setImageResource(micResId);
                         cardImage4.setImageResource(micResId);
-                        resetProgressBar1();
-                        resetProgressBar2();
-                        resetProgressBar3();
-                        resetProgressBar4();
                         break;
 
                     default:
@@ -1302,30 +1464,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!isPlaying1){
                     play1();
-                    startProgressBar1();
                     isPlaying1 = true;
                     cardImage1.setImageResource(pauseResId);
                 }
                 if (!isPlaying2){
                     play2();
-                    startProgressBar2();
                     isPlaying2 = true;
                     cardImage2.setImageResource(pauseResId);
                 }
                 if (!isPlaying3){
                     play3();
-                    startProgressBar3();
                     isPlaying3 = true;
                     cardImage3.setImageResource(pauseResId);
                 }
                 if (!isPlaying4){
                     play4();
-                    startProgressBar4();
                     isPlaying4 = true;
                     cardImage4.setImageResource(pauseResId);
                 }
             }
         });
-
     }
 }

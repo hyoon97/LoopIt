@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -39,6 +40,10 @@ public class PopUpMetronome extends Activity {
     private RadioButton clickRadio;
     private RadioButton noteRadio;
 
+
+
+    private SeekBar durationSeekBar;
+
     private int currentNote = 0;
 
     TextView[] pitchValues = new TextView[24];
@@ -50,7 +55,6 @@ public class PopUpMetronome extends Activity {
     private String blue = "#42a7f4";
 
     private void initPitches(){
-
         for (int i = 0; i < pitches.length; ++i){
             String pitchId = "pitchValue" + i;
             int resId = getResources().getIdentifier(pitchId, "id", getPackageName());
@@ -64,22 +68,18 @@ public class PopUpMetronome extends Activity {
             pitchCards[i].setCardBackgroundColor(Color.parseColor(blue));
         }
 
-        //pitchCards[currentNote].setCardBackgroundColor(Color.parseColor("#f49242"));
-
-        for (int i = 0;i <pitches.length;i++){
+        for (int i = 0; i < pitches.length; i++){
             final int j = i;
             pitchCards[j].setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    //int n = Arrays.asList(pitchCards).indexOf()
-                    if(MainActivity.metronomeNoteSound){
-                        Log.e("Pitch", pitches[j]);
-                        MainActivity.metronome.changeNote(j);
-                        pitchCards[j].setCardBackgroundColor(Color.parseColor(orange));
-                        pitchCards[currentNote].setCardBackgroundColor(Color.parseColor(blue));
-                        currentNote = j;
-
-                    }
+                if(MainActivity.metronomeNoteSound){
+                    Log.e("Pitch", pitches[j]);
+                    MainActivity.metronome.changeNote(j);
+                    pitchCards[j].setCardBackgroundColor(Color.parseColor(orange));
+                    pitchCards[currentNote].setCardBackgroundColor(Color.parseColor(blue));
+                    currentNote = j;
+                }
                 }
             });
         }
@@ -87,11 +87,12 @@ public class PopUpMetronome extends Activity {
 
 
     private void initMetronome(){
-
         bpmIncButton = (Button) findViewById(R.id.inc_bpm_button);
         bpmDecButton = (Button) findViewById(R.id.dec_bpm_button);
         bpmTextView = (TextView) findViewById(R.id.bpm_textView);
         metronomeSwitch = (Switch) findViewById(R.id.metronome_switch);
+
+        durationSeekBar = (SeekBar) findViewById(R.id.seekbar);
 
         bpmIncButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -223,10 +224,10 @@ public class PopUpMetronome extends Activity {
         decDurationButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (MainActivity.duration > 1) {
-                    MainActivity.duration--;
-                    durationTextView.setText("" + MainActivity.duration);
-                }
+            if (MainActivity.duration > 1) {
+                MainActivity.duration--;
+                durationTextView.setText("" + MainActivity.duration);
+            }
             }
         });
 
@@ -258,10 +259,19 @@ public class PopUpMetronome extends Activity {
         clickRadio = (RadioButton) findViewById(R.id.click_radio);
         noteRadio = (RadioButton) findViewById(R.id.note_radio);
 
+        if (MainActivity.lastMode == 1){
+            clickRadio.setChecked(true);
+        }
+
+        else if (MainActivity.lastMode == 2){
+            noteRadio.setChecked(true);
+        }
+
         clickRadio.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 MainActivity.metronomeNoteSound = false;
+                MainActivity.lastMode = 1;
                 MainActivity.metronome.changeToClick();
                 pitchCards[currentNote].setCardBackgroundColor(Color.parseColor(blue));
             }
@@ -271,14 +281,15 @@ public class PopUpMetronome extends Activity {
             @Override
             public void onClick(View v) {
                 MainActivity.metronomeNoteSound = true;
+                MainActivity.lastMode = 2;
                 MainActivity.metronome.changeToNote();
                 pitchCards[currentNote].setCardBackgroundColor(Color.parseColor(orange));
-
             }
         });
 
         clickRadio.setActivated(true);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -303,7 +314,4 @@ public class PopUpMetronome extends Activity {
 
         initPitches();
     }
-
-
-
 }
