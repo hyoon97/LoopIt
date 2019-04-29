@@ -15,6 +15,7 @@ public class Metronome{
     private Context mainConext;
     private int[] notes;
     private int note;
+    private int kickSound;
 
     public Metronome(int initBpm, Context context){
         handler = new Handler();
@@ -32,7 +33,7 @@ public class Metronome{
                 .setAudioAttributes(audioAttributes)
                 .build();
 
-        met_sound = soundPool.load(mainConext, R.raw.kick,1);
+        kickSound = soundPool.load(mainConext, R.raw.kick,1);
         notes[0] = soundPool.load(mainConext, R.raw.c3,1);
         notes[1] = soundPool.load(mainConext, R.raw.db3,1);
         notes[2] = soundPool.load(mainConext, R.raw.d3,1);
@@ -58,11 +59,10 @@ public class Metronome{
         notes[22] = soundPool.load(mainConext, R.raw.bb4,1);
         notes[23] = soundPool.load(mainConext, R.raw.b4,1);
 
+        met_sound = kickSound;
+
     }
 
-    public Handler getHandler() {
-        return handler;
-    }
 
     public void incBpm(int inc){
         bpm += inc;
@@ -76,9 +76,17 @@ public class Metronome{
         return bpm;
     }
 
-    public void changeMet(){
-        note = (note + 1) % 24;
+    public void changeNote(int note){
+        this.note = note;
         met_sound = notes[note];
+    }
+
+    public void changeToNote(){
+        met_sound = notes[note];
+    }
+
+    public void changeToClick(){
+        met_sound = kickSound;
     }
 
     private Runnable runnable = new Runnable() {

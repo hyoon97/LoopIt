@@ -5,10 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import java.util.Arrays;
 
 public class PopUpMetronome extends Activity {
 
@@ -32,6 +36,9 @@ public class PopUpMetronome extends Activity {
     private TextView durationTextView;
     private Switch durationSwitch;
 
+    private RadioButton clickRadio;
+    private RadioButton noteRadio;
+
     private int currentNote = 0;
 
     TextView[] pitchValues = new TextView[24];
@@ -39,6 +46,8 @@ public class PopUpMetronome extends Activity {
     CardView[] pitchCards = new CardView[24];
 
     String[] pitches = {"C3", "Db3", "D3", "Eb3", "E3", "F3", "Gb3", "G3", "Ab3", "A3", "Bb3", "B3", "C4", "Db4", "D4", "Eb4", "E4", "F4", "Gb4", "G4", "Ab4", "A4", "Bb4", "B4"};
+    private String orange = "#f49242";
+    private String blue = "#42a7f4";
 
     private void initPitches(){
 
@@ -52,10 +61,28 @@ public class PopUpMetronome extends Activity {
             String pitchCardId = "pitch" + i;
             resId = getResources().getIdentifier(pitchCardId, "id", getPackageName());
             pitchCards[i] = findViewById(resId);
-            pitchCards[i].setCardBackgroundColor(Color.parseColor("#42a7f4"));
+            pitchCards[i].setCardBackgroundColor(Color.parseColor(blue));
         }
 
-        pitchCards[currentNote].setCardBackgroundColor(Color.parseColor("#f49242"));
+        //pitchCards[currentNote].setCardBackgroundColor(Color.parseColor("#f49242"));
+
+        for (int i = 0;i <pitches.length;i++){
+            final int j = i;
+            pitchCards[j].setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    //int n = Arrays.asList(pitchCards).indexOf()
+                    if(MainActivity.metronomeNoteSound){
+                        Log.e("Pitch", pitches[j]);
+                        MainActivity.metronome.changeNote(j);
+                        pitchCards[j].setCardBackgroundColor(Color.parseColor(orange));
+                        pitchCards[currentNote].setCardBackgroundColor(Color.parseColor(blue));
+                        currentNote = j;
+
+                    }
+                }
+            });
+        }
     }
 
 
@@ -99,6 +126,7 @@ public class PopUpMetronome extends Activity {
                     MainActivity.durationMode = false;
                     MainActivity.countdownMode = false;
                     MainActivity.beatsMode = false;
+                    pitchCards[currentNote].setCardBackgroundColor(Color.parseColor(blue));
                 }
             }
         });
@@ -225,6 +253,32 @@ public class PopUpMetronome extends Activity {
         durationTextView.setText("" + MainActivity.duration);
 
     }
+
+    private void initRadio(){
+        clickRadio = (RadioButton) findViewById(R.id.click_radio);
+        noteRadio = (RadioButton) findViewById(R.id.note_radio);
+
+        clickRadio.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                MainActivity.metronomeNoteSound = false;
+                MainActivity.metronome.changeToClick();
+                pitchCards[currentNote].setCardBackgroundColor(Color.parseColor(blue));
+            }
+        });
+
+        noteRadio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.metronomeNoteSound = true;
+                MainActivity.metronome.changeToNote();
+                pitchCards[currentNote].setCardBackgroundColor(Color.parseColor(orange));
+
+            }
+        });
+
+        clickRadio.setActivated(true);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -245,6 +299,7 @@ public class PopUpMetronome extends Activity {
         initBeats();
         initCountdown();
         initDuration();
+        initRadio();
 
         initPitches();
     }

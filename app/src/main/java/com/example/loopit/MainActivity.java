@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean countdownMode = false;
     public static int duration = 0;
     public static boolean durationMode = false;
+    public static boolean metronomeNoteSound = false;
 
     //UI Variables
     CardView card1;

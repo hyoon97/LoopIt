@@ -79,13 +79,14 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/click_radio"
 
                     android:text="Click"/>
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:id="@+id/note_radio"
                     android:text="Note"/>
 
             </RadioGroup>
