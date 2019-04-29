@@ -36,8 +36,6 @@ public class Player {
         }
         time = player.getDuration();
 //        player.setPlaybackParams(params);
-        player.setLooping(isLoop);
-        player.seekTo(currentPosition);
         player.start();
     }
 
@@ -51,8 +49,6 @@ public class Player {
             Log.e(LOG_TAG, "prepare2() failed");
         }
 //        player.setPlaybackParams(params);
-        player.setLooping(isLoop);
-        player.seekTo(currentPosition);
         player.start();
     }
 

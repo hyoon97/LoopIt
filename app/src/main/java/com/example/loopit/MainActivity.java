@@ -113,8 +113,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isPlaying4 = false;
 
     private Timer stopNonFirstRecord;
-    private Timer overdubHandler;
-    private Timer playerHandler;
+    private Timer loop;
 
     private ArrayList<String> track1 = new ArrayList<String>();
     private ArrayList<String> track2 = new ArrayList<String>();
@@ -477,7 +476,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     recorder1.stop();
-                    player1.play();
+//                    player1.play();
+                    play1();
                     isPlaying1 = true;
                     isRecorded1 = true;
                     isRecording1 = false;
@@ -498,8 +498,9 @@ public class MainActivity extends AppCompatActivity {
         stopNonFirstRecord.schedule(new TimerTask() {
             @Override
             public void run() {
-                player1.playPrevious();
-                overdubPlayer1.play();
+//                player1.playPrevious();
+//                overdubPlayer1.play();
+                play1();
                 isPlaying1 = true;
                 isRecorded1 = true;
                 isRecording1 = false;
@@ -543,18 +544,43 @@ public class MainActivity extends AppCompatActivity {
         recorder1.stop();
         player1.play();
         time = player1.getDuration();
+        loop = new Timer();
+        loop.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                player1.play();
+            }
+        }, time-180, time-180);
     }
 
     public void play1(){
-        if(trackNum1 == 1)
+        if(trackNum1 == 1){
             player1.play();
+            loop = new Timer();
+            loop.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player1.play();
+                }
+            }, time-195, time-215);
+        }
         else{
             player1.playPrevious();
             overdubPlayer1.play();
+            loop = new Timer();
+            loop.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player1.playPrevious();
+                    overdubPlayer1.play();
+                }
+            }, time-195, time-215);
         }
     }
 
     public void stop1(){
+        loop.cancel();
+        loop.purge();
         player1.stop();
         overdubPlayer1.stop();
     }
@@ -576,12 +602,12 @@ public class MainActivity extends AppCompatActivity {
             trackNum2 += 1;
             recorder2.start();
             stopNonFirstRecord = new Timer();
-//            stopNonFirstRecord.schedule(stopNonFirst2, time);
             stopNonFirstRecord.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     recorder2.stop();
-                    player2.play();
+//                    player2.play();
+                    play2();
                     isPlaying2 = true;
                     isRecorded2 = true;
                     isRecording2 = false;
@@ -595,6 +621,13 @@ public class MainActivity extends AppCompatActivity {
         recorder2.stop();
         player2.play();
         time = player2.getDuration();
+        loop = new Timer();
+        loop.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                player2.play();
+            }
+        }, time-180, time-180);
     }
 
     public void start_overdub2(){
@@ -608,8 +641,9 @@ public class MainActivity extends AppCompatActivity {
         stopNonFirstRecord.schedule(new TimerTask() {
             @Override
             public void run() {
-                player2.playPrevious();
-                overdubPlayer2.play();
+//                player2.playPrevious();
+//                overdubPlayer2.play();
+                play2();
                 isPlaying2 = true;
                 isRecorded2 = true;
                 isRecording2 = false;
@@ -619,15 +653,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void play2(){
-        if(trackNum2 == 1)
+        if(trackNum2 == 1){
             player2.play();
+            loop = new Timer();
+            loop.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player2.play();
+                }
+            }, time-180, time-280);
+        }
         else{
             player2.playPrevious();
             overdubPlayer2.play();
+            loop = new Timer();
+            loop.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player2.playPrevious();
+                    overdubPlayer2.play();
+                }
+            }, time-180, time-180);
         }
     }
 
     public void stop2(){
+        loop.cancel();
+        loop.purge();
         player2.stop();
         overdubPlayer2.stop();
     }
@@ -653,7 +705,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     recorder3.stop();
-                    player3.play();
+//                    player3.play();
+                    play3();
                     isPlaying3 = true;
                     isRecorded3 = true;
                     isRecording3 = false;
@@ -667,6 +720,13 @@ public class MainActivity extends AppCompatActivity {
         recorder3.stop();
         player3.play();
         time = player3.getDuration();
+        loop = new Timer();
+        loop.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                player3.play();
+            }
+        }, time-180, time-180);
     }
 
     public void start_overdub3(){
@@ -680,8 +740,9 @@ public class MainActivity extends AppCompatActivity {
         stopNonFirstRecord.schedule(new TimerTask() {
             @Override
             public void run() {
-                player3.playPrevious();
-                overdubPlayer3.play();
+//                player3.playPrevious();
+//                overdubPlayer3.play();
+                play3();
                 isPlaying3 = true;
                 isRecorded3 = true;
                 isRecording3 = false;
@@ -691,15 +752,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void play3(){
-        if(trackNum3 == 1)
+        if(trackNum3 == 1){
             player3.play();
+            loop = new Timer();
+            loop.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player3.play();
+                }
+            }, time-180, time-280);
+        }
         else{
             player3.playPrevious();
             overdubPlayer3.play();
+            loop = new Timer();
+            loop.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player3.playPrevious();
+                    overdubPlayer3.play();
+                }
+            }, time-180, time-180);
         }
     }
 
     public void stop3(){
+        loop.cancel();
+        loop.purge();
         player3.stop();
         overdubPlayer3.stop();
     }
@@ -725,7 +804,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     recorder4.stop();
-                    player4.play();
+//                    player4.play();
+                    play4();
                     isPlaying4 = true;
                     isRecorded4 = true;
                     isRecording4 = false;
@@ -739,6 +819,13 @@ public class MainActivity extends AppCompatActivity {
         recorder4.stop();
         player4.play();
         time = player4.getDuration();
+        loop = new Timer();
+        loop.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                player4.play();
+            }
+        }, time-180, time-180);
     }
 
     public void start_overdub4(){
@@ -752,8 +839,9 @@ public class MainActivity extends AppCompatActivity {
         stopNonFirstRecord.schedule(new TimerTask() {
             @Override
             public void run() {
-                player4.playPrevious();
-                overdubPlayer4.play();
+//                player4.playPrevious();
+//                overdubPlayer4.play();
+                play4();
                 isPlaying4 = true;
                 isRecorded4 = true;
                 isRecording4 = false;
@@ -763,15 +851,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void play4(){
-        if(trackNum4 == 1)
+        if(trackNum4 == 1){
             player4.play();
+            loop = new Timer();
+            loop.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player4.play();
+                }
+            }, time-180, time-280);
+        }
         else{
             player4.playPrevious();
             overdubPlayer4.play();
+            loop = new Timer();
+            loop.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player4.playPrevious();
+                    overdubPlayer4.play();
+                }
+            }, time-180, time-180);
         }
     }
 
     public void stop4(){
+        loop.cancel();
+        loop.purge();
         player4.stop();
         overdubPlayer4.stop();
     }

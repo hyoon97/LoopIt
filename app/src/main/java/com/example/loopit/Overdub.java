@@ -33,7 +33,7 @@ public class Overdub {
         }
         recorder.start();
         Handler = new Timer();
-        Handler.schedule(stop, time);
+        Handler.schedule(stop, time+220);
     }
 
     private TimerTask stop = new TimerTask(){
