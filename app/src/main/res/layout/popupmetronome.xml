@@ -97,7 +97,9 @@
                 android:layout_below="@+id/clickNote"
                 android:layout_centerInParent="true"
                 android:scrollbars="none"
-                android:padding="2dp">
+                android:padding="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
