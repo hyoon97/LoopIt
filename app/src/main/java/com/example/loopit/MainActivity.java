@@ -17,8 +17,6 @@ import android.media.PlaybackParams;
 import android.support.annotation.NonNull;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
 
@@ -118,7 +116,10 @@ public class MainActivity extends AppCompatActivity {
     private boolean isPlaying4 = false;
 
     private Timer stopNonFirstRecord;
-    private Timer loop;
+    private Timer loop1;
+    private Timer loop2;
+    private Timer loop3;
+    private Timer loop4;
 
     private ArrayList<String> track1 = new ArrayList<String>();
     private ArrayList<String> track2 = new ArrayList<String>();
@@ -703,7 +704,6 @@ public class MainActivity extends AppCompatActivity {
                     buttonUnblock(1);
                 }
             }, time+220);
-
         }
     }
 
@@ -726,7 +726,7 @@ public class MainActivity extends AppCompatActivity {
                 isRecording1 = false;
                 cardImage1.setImageResource(pauseResId);
             }
-        }, time+220);
+        }, time+40);
     }
 
 //    public void start_overdub1(){
@@ -764,8 +764,8 @@ public class MainActivity extends AppCompatActivity {
         recorder1.stop();
         player1.play();
         time = player1.getDuration();
-        loop = new Timer();
-        loop.schedule(new TimerTask() {
+        loop1 = new Timer();
+        loop1.schedule(new TimerTask() {
             @Override
             public void run() {
                 player1.play();
@@ -776,31 +776,34 @@ public class MainActivity extends AppCompatActivity {
     public void play1(){
         if(trackNum1 == 1){
             player1.play();
-            loop = new Timer();
-            loop.schedule(new TimerTask() {
+            loop1 = new Timer();
+            loop1.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     player1.play();
                 }
-            }, time-195, time-215);
+            }, time-180, time-180);
         }
         else{
             player1.playPrevious();
             overdubPlayer1.play();
-            loop = new Timer();
-            loop.schedule(new TimerTask() {
+            loop1 = new Timer();
+            loop1.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     player1.playPrevious();
                     overdubPlayer1.play();
                 }
-            }, time-195, time-215);
+            }, time-180, time-280);
         }
     }
 
     public void stop1(){
-        loop.cancel();
-        loop.purge();
+        if (loop1 != null){
+            loop1.cancel();
+            loop1.purge();
+            loop1 = null;
+        }
         player1.stop();
         overdubPlayer1.stop();
     }
@@ -837,7 +840,7 @@ public class MainActivity extends AppCompatActivity {
                     cardImage2.setImageResource(pauseResId);
                     buttonUnblock(2);
                 }
-            }, time+220);
+            }, time+40);
         }
     }
 
@@ -846,8 +849,8 @@ public class MainActivity extends AppCompatActivity {
         player2.play();
 
         time = player2.getDuration();
-        loop = new Timer();
-        loop.schedule(new TimerTask() {
+        loop2 = new Timer();
+        loop2.schedule(new TimerTask() {
             @Override
             public void run() {
                 player2.play();
@@ -880,8 +883,8 @@ public class MainActivity extends AppCompatActivity {
     public void play2(){
         if(trackNum2 == 1){
             player2.play();
-            loop = new Timer();
-            loop.schedule(new TimerTask() {
+            loop2 = new Timer();
+            loop2.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     player2.play();
@@ -891,8 +894,8 @@ public class MainActivity extends AppCompatActivity {
         else{
             player2.playPrevious();
             overdubPlayer2.play();
-            loop = new Timer();
-            loop.schedule(new TimerTask() {
+            loop2 = new Timer();
+            loop2.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     player2.playPrevious();
@@ -903,8 +906,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stop2(){
-        loop.cancel();
-        loop.purge();
+        if (loop2 != null){
+            loop2.cancel();
+            loop2.purge();
+            loop2 = null;
+        }
         player2.stop();
         overdubPlayer2.stop();
     }
@@ -941,7 +947,7 @@ public class MainActivity extends AppCompatActivity {
                     cardImage3.setImageResource(pauseResId);
                     buttonUnblock(3);
                 }
-            }, time+220);
+            }, time+40);
         }
     }
 
@@ -949,8 +955,8 @@ public class MainActivity extends AppCompatActivity {
         recorder3.stop();
         player3.play();
         time = player3.getDuration();
-        loop = new Timer();
-        loop.schedule(new TimerTask() {
+        loop3 = new Timer();
+        loop3.schedule(new TimerTask() {
             @Override
             public void run() {
                 player3.play();
@@ -983,19 +989,19 @@ public class MainActivity extends AppCompatActivity {
     public void play3(){
         if(trackNum3 == 1){
             player3.play();
-            loop = new Timer();
-            loop.schedule(new TimerTask() {
+            loop3 = new Timer();
+            loop3.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     player3.play();
                 }
-            }, time-180, time-280);
+            }, time-180, time-180);
         }
         else{
             player3.playPrevious();
             overdubPlayer3.play();
-            loop = new Timer();
-            loop.schedule(new TimerTask() {
+            loop3 = new Timer();
+            loop3.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     player3.playPrevious();
@@ -1006,8 +1012,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stop3(){
-        loop.cancel();
-        loop.purge();
+        if (loop3 != null){
+            loop3.cancel();
+            loop3.purge();
+            loop3 = null;
+        }
         player3.stop();
         overdubPlayer3.stop();
     }
@@ -1044,7 +1053,7 @@ public class MainActivity extends AppCompatActivity {
                     cardImage4.setImageResource(pauseResId);
                     buttonUnblock(4);
                 }
-            }, time+220);
+            }, time+40);
         }
     }
 
@@ -1052,8 +1061,8 @@ public class MainActivity extends AppCompatActivity {
         recorder4.stop();
         player4.play();
         time = player4.getDuration();
-        loop = new Timer();
-        loop.schedule(new TimerTask() {
+        loop4 = new Timer();
+        loop4.schedule(new TimerTask() {
             @Override
             public void run() {
                 player4.play();
@@ -1086,19 +1095,19 @@ public class MainActivity extends AppCompatActivity {
     public void play4(){
         if(trackNum4 == 1){
             player4.play();
-            loop = new Timer();
-            loop.schedule(new TimerTask() {
+            loop4 = new Timer();
+            loop4.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     player4.play();
                 }
-            }, time-180, time-280);
+            }, time-180, time-180);
         }
         else{
             player4.playPrevious();
             overdubPlayer4.play();
-            loop = new Timer();
-            loop.schedule(new TimerTask() {
+            loop4 = new Timer();
+            loop4.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     player4.playPrevious();
@@ -1109,8 +1118,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stop4(){
-        loop.cancel();
-        loop.purge();
+        if (loop4 != null){
+            loop4.cancel();
+            loop4.purge();
+            loop4 = null;
+        }
         player4.stop();
         overdubPlayer4.stop();
     }
@@ -1311,8 +1323,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (trackControlNum){
                     case 1:
-                        player1.stop();
-
+                        stop1();
                         trackNum1 = 0;
                         isRecording1 = false;
                         isRecorded1 = false;
@@ -1326,7 +1337,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case 2:
-                        player2.stop();
+                        stop2();
 
                         trackNum2 = 0;
                         isRecording2 = false;
@@ -1341,7 +1352,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case 3:
-                        player3.stop();
+                        stop3();
 
                         trackNum3 = 0;
                         isRecording3 = false;
@@ -1356,7 +1367,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case 4:
-                        player4.stop();
+                        stop4();
 
                         trackNum4 = 0;
                         isRecording4 = false;
@@ -1371,10 +1382,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case 5:
-                        player1.stop();
-                        player2.stop();
-                        player3.stop();
-                        player4.stop();
+                        stop1();
+                        stop2();
+                        stop3();
+                        stop4();
 
                         initCards();
 

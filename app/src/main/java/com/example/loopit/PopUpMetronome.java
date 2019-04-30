@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -73,13 +74,13 @@ public class PopUpMetronome extends Activity {
             pitchCards[j].setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                if(MainActivity.metronomeNoteSound){
-                    Log.e("Pitch", pitches[j]);
-                    MainActivity.metronome.changeNote(j);
-                    pitchCards[j].setCardBackgroundColor(Color.parseColor(orange));
-                    pitchCards[currentNote].setCardBackgroundColor(Color.parseColor(blue));
-                    currentNote = j;
-                }
+                    if(MainActivity.metronomeNoteSound){
+                        Log.e("Pitch", pitches[j]);
+                        MainActivity.metronome.changeNote(j);
+                        pitchCards[j].setCardBackgroundColor(Color.parseColor(orange));
+                        pitchCards[currentNote].setCardBackgroundColor(Color.parseColor(blue));
+                        currentNote = j;
+                    }
                 }
             });
         }
@@ -101,6 +102,15 @@ public class PopUpMetronome extends Activity {
                 bpmTextView.setText("" + MainActivity.metronome.getBpm());
             }
         });
+
+//        bpmIncButton.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                MainActivity.metronome.incBpm(5);
+//                bpmTextView.setText("" + MainActivity.metronome.getBpm());
+//                return false;
+//            }
+//        });
 
         bpmDecButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -224,10 +234,10 @@ public class PopUpMetronome extends Activity {
         decDurationButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-            if (MainActivity.duration > 1) {
-                MainActivity.duration--;
-                durationTextView.setText("" + MainActivity.duration);
-            }
+                if (MainActivity.duration > 1) {
+                    MainActivity.duration--;
+                    durationTextView.setText("" + MainActivity.duration);
+                }
             }
         });
 
